@@ -8,6 +8,7 @@
 package core.utils.graphic {
 import core.utils.DisplayObjectUtil;
 import core.view.FieldView;
+import core.view.SequenceView;
 import core.view.ViewBase;
 
 import flash.display.Bitmap;
@@ -24,16 +25,15 @@ import starling.core.Starling;
 import starling.display.DisplayObject
 import starling.display.DisplayObjectContainer;
 import starling.display.Image;
+import starling.display.MovieClip;
 
 
 import starling.display.Sprite;
 import starling.events.Event;
+import starling.textures.Texture;
+import starling.textures.TextureAtlas;
 
 public class GraphicsEngineConnector {
-
-    public static const BALL:String = "ball";
-    [Embed(source="../../../../assets/ball.png")]
-    private const BallViewClass:Class
 
     private static var _classes:Dictionary;
 
@@ -56,6 +56,7 @@ public class GraphicsEngineConnector {
         _classes = new Dictionary();
         _classes[ViewBase] = Sprite;
         _classes[FieldView] = Sprite;
+        _classes[SequenceView] = MovieClip;
 
         _starling = new Starling(StarlingSceneView, stage);
     }
@@ -69,20 +70,26 @@ public class GraphicsEngineConnector {
         _starling.stop();
     }
 
-    public function initView(view:ViewBase, texture:Bitmap):void{
+    public function initView(view:ViewBase, texture:Bitmap = null, texture_desc:XML = null):void{
         var ViewClass:Class = _classes[(view as Object).constructor];
         if(!ViewClass)
             return;
 
-        _views[view] ||= new ViewClass();
+        // sprite can be without texture
+        if(!texture_desc){
+            _views[view] ||= new ViewClass();
 
-        initViewWithBitmap(view, texture);
-    }
+            if(texture)
+                _views[view].addChild(Image.fromBitmap(texture));
 
-    private function initViewWithBitmap(view:ViewBase, texture:Bitmap):void{
-        var v:DisplayObjectContainer = _views[view];
-        if((v is Sprite) && texture)
-            v.addChild(Image.fromBitmap(texture));
+            return;
+        }
+
+        // movie clip needs texture and texture_desc
+        if(texture){
+            var atlas:TextureAtlas = new TextureAtlas(Texture.fromBitmap(texture), texture_desc);
+            _views[view] ||= new MovieClip(atlas.getTextures());
+        }
     }
 
 
@@ -208,27 +215,28 @@ public class GraphicsEngineConnector {
         return v.bounds;
     }
 
+
     public function addChild(parent:ViewBase, child:ViewBase):void{
-        var p:DisplayObjectContainer = _views[parent];
-        var c:DisplayObjectContainer = _views[child];
+        var p:DisplayObjectContainer = _views[parent] as DisplayObjectContainer;
+        var c:DisplayObject = _views[child];
         if(p && c)
             p.addChild(c);
     }
 
     public function removeChild(child:ViewBase):void{
-        var c:DisplayObjectContainer = _views[child];
+        var c:DisplayObject = _views[child];
         DisplayObjectUtil.tryRemove(c);
     }
 
-    public function removeChildAt(child:ViewBase, index:uint):void{
-        var c:DisplayObjectContainer = _views[child];
-        if(c)
-            c.removeChildAt(index);
+    public function removeChildAt(parent:ViewBase, index:uint):void{
+        var p:DisplayObjectContainer = _views[parent];
+        if(p)
+            p.removeChildAt(index);
     }
 
     public function addChildToScene(child:ViewBase):void{
         var p:DisplayObjectContainer = StarlingSceneView.instance;
-        var c:DisplayObjectContainer = _views[child];
+        var c:DisplayObject = _views[child];
         if(p && c)
             p.addChild(c);
     }
@@ -244,7 +252,7 @@ public class GraphicsEngineConnector {
     }
 
     public function getParent(child:ViewBase):ViewBase{
-        var c:DisplayObjectContainer = _views[child];
+        var c:DisplayObject = _views[child];
         var p:DisplayObjectContainer = c.parent;
         for (var s:* in _views){
             if(_views[s] == p)
@@ -252,6 +260,36 @@ public class GraphicsEngineConnector {
         }
         return null;
     }
+
+
+    // MOVIE CLIP
+    public function playSequence(s:SequenceView):void{
+        var p:MovieClip = _views[s];
+        if(p){
+            p.play();
+            Starling.juggler.add(p);
+        }
+    }
+
+    public function pauseSequence(s:SequenceView):void{
+        var p:MovieClip = _views[s];
+        if(p)
+            p.pause();
+    }
+
+    public function stopSequence(s:SequenceView):void{
+        var p:MovieClip = _views[s];
+        if(p){
+            p.stop();
+            Starling.juggler.remove(p);
+        }
+    }
+
+    public function getSequenceIsPlaying(s:SequenceView):Boolean{
+        var p:MovieClip = _views[s] as MovieClip;
+        return p && p.isPlaying;
+    }
+    // END MOVIE CLIP
 
 }
 }

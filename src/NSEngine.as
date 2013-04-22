@@ -3,14 +3,13 @@ package {
 import core.utils.AssetsLib;
 import core.utils.graphic.GraphicsEngineConnector;
 import core.view.FieldView;
+import core.view.SequenceView;
 import core.view.ViewBase;
 
 import flash.display.Bitmap;
 
 import flash.display.Sprite;
 import flash.events.Event;
-import flash.geom.Point;
-import flash.geom.Rectangle;
 
 
 public class NSEngine extends Sprite {
@@ -41,6 +40,14 @@ public class NSEngine extends Sprite {
 
         view.width = 150;
         view.height = 150;
+
+        var aL:AssetsLib = AssetsLib.instance;
+        var sequence:SequenceView = new SequenceView(aL.getAssetBy(AssetsLib.RAT_RUN), aL.getDescBy(AssetsLib.RAT_RUN))
+        field.addChild(sequence);
+        sequence.play();
+
+        field.removeChild(sequence);
+        trace(sequence.isPlaying);
 
 //        field.removeChild(view);
 

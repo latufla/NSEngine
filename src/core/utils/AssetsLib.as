@@ -15,11 +15,21 @@ public class AssetsLib {
     [Embed(source="../../../assets/ball.png")]
     private const BallViewClass:Class
 
+
     public static const LEVEL_1:String = "level1";
     [Embed(source="../../../assets/levels/1/level.jpg")]
     private const Level1ViewClass:Class
 
+
+    public static const RAT_RUN:String = "ratRun";
+    [Embed(source="../../../assets/ratRun.png")]
+    private const RatRunViewClass:Class;
+
+    [Embed(source="../../../assets/ratRunDesc.xml", mimeType="application/octet-stream")]
+    private const RatRunXMLClass:Class;
+
     private var _assets:Array/* String -> Class */;
+    private var _assetsDesc:Array/* String -> XML */;
 
     private static var _instance:AssetsLib;
 
@@ -39,17 +49,32 @@ public class AssetsLib {
         try{
             asset = new _assets[name]();
         } catch (e:Error){
-            trace("StarlingAssetsLib -> getAssetBy(): no asset with name: " + name);
+            trace("AssetsLib -> getAssetBy(): no asset with name: " + name);
         }
 
         return asset;
     }
 
+    public function getDescBy(name:String):XML{
+        var desc:XML;
+        try{
+            desc = XML(new _assetsDesc[name]());
+        } catch (e:Error){
+            trace("AssetsLib -> getDescBy(): no desc with name: " + name);
+        }
+
+        return desc;
+    }
+
     private function init():void {
         _assets = [];
+        _assetsDesc = [];
 
         _assets[BALL] = BallViewClass;
         _assets[LEVEL_1] = Level1ViewClass;
+
+        _assets[RAT_RUN] = RatRunViewClass;
+        _assetsDesc[RAT_RUN] = RatRunXMLClass;
     }
 }
 }
