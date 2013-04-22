@@ -46,10 +46,9 @@ public class NSEngine extends Sprite {
         field.addChild(sequence);
         sequence.play();
 
-        field.removeChild(sequence);
+        trace(field.removeChildAt(2));
+//        field.removeChild(sequence);
         trace(sequence.isPlaying);
-
-//        field.removeChild(view);
 
 //        field.pivot = new Point(300, 300);
 //        field.rotation = Math.PI / 2;

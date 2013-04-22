@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.utils.graphic {
+import core.utils.CollectionUtils;
 import core.utils.DisplayObjectUtil;
 import core.view.FieldView;
 import core.view.SequenceView;
@@ -228,10 +229,15 @@ public class GraphicsEngineConnector {
         DisplayObjectUtil.tryRemove(c);
     }
 
-    public function removeChildAt(parent:ViewBase, index:uint):void{
+    public function removeChildAt(parent:ViewBase, index:uint):ViewBase{
         var p:DisplayObjectContainer = _views[parent];
-        if(p)
-            p.removeChildAt(index);
+        var removedChild:DisplayObject;
+        if(p){
+            removedChild = p.removeChildAt(index);
+            return CollectionUtils.getKeyByValue(_views, removedChild);
+        }
+
+        return null;
     }
 
     public function addChildToScene(child:ViewBase):void{
@@ -254,11 +260,7 @@ public class GraphicsEngineConnector {
     public function getParent(child:ViewBase):ViewBase{
         var c:DisplayObject = _views[child];
         var p:DisplayObjectContainer = c.parent;
-        for (var s:* in _views){
-            if(_views[s] == p)
-                return s;
-        }
-        return null;
+        return CollectionUtils.getKeyByValue(_views, p);
     }
 
 

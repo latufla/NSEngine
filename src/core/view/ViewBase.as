@@ -32,11 +32,16 @@ public class ViewBase {
     }
 
     public function removeChild(child:ViewBase):void{
+        if(child is SequenceView)
+            (child as SequenceView).stop();
+
         GraphicsEngineConnector.instance.removeChild(child);
     }
 
     public function removeChildAt(index:uint):void{
-        GraphicsEngineConnector.instance.removeChildAt(this, index);
+        var removedChild:ViewBase = GraphicsEngineConnector.instance.removeChildAt(this, index);
+        if(removedChild is SequenceView)
+            (removedChild as SequenceView).stop();
     }
 
     public function get parent():ViewBase{
