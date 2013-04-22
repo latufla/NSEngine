@@ -20,6 +20,7 @@ public class SequenceView extends ViewBase{
 
     override protected function init():void{
         GraphicsEngineConnector.instance.initView(this, _texture, _desc);
+        stop();
     }
 
     public function play():void{

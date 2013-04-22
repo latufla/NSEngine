@@ -8,6 +8,7 @@
 package core.utils.graphic {
 import core.utils.CollectionUtils;
 import core.utils.DisplayObjectUtil;
+import core.view.AnimatedView;
 import core.view.FieldView;
 import core.view.SequenceView;
 import core.view.ViewBase;
@@ -58,6 +59,7 @@ public class GraphicsEngineConnector {
         _classes[ViewBase] = Sprite;
         _classes[FieldView] = Sprite;
         _classes[SequenceView] = MovieClip;
+        _classes[AnimatedView] = Sprite;
 
         _starling = new Starling(StarlingSceneView, stage);
     }
@@ -254,7 +256,7 @@ public class GraphicsEngineConnector {
 
     public function getNumChildren(parent:ViewBase):uint{
         var p:DisplayObjectContainer = _views[parent];
-        return p.numChildren
+        return p.numChildren;
     }
 
     public function getParent(child:ViewBase):ViewBase{

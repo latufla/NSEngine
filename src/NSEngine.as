@@ -2,6 +2,7 @@ package {
 
 import core.utils.AssetsLib;
 import core.utils.graphic.GraphicsEngineConnector;
+import core.view.AnimatedView;
 import core.view.FieldView;
 import core.view.SequenceView;
 import core.view.ViewBase;
@@ -42,13 +43,24 @@ public class NSEngine extends Sprite {
         view.height = 150;
 
         var aL:AssetsLib = AssetsLib.instance;
-        var sequence:SequenceView = new SequenceView(aL.getAssetBy(AssetsLib.RAT_RUN), aL.getDescBy(AssetsLib.RAT_RUN))
-        field.addChild(sequence);
-        sequence.play();
 
-        trace(field.removeChildAt(2));
+        var sequence:SequenceView = new SequenceView(aL.getAssetBy(AssetsLib.RAT_RUN), aL.getDescBy(AssetsLib.RAT_RUN))
+        var animatedView:AnimatedView = new AnimatedView();
+        animatedView.addAnimation("ratRun", sequence);
+
+        var sequence2:SequenceView = new SequenceView(aL.getAssetBy(AssetsLib.RAT_MOVE), aL.getDescBy(AssetsLib.RAT_MOVE))
+        animatedView.addAnimation("ratMove", sequence2);
+
+        animatedView.gotoAndPlay("ratRun");
+        animatedView.gotoAndPlay("ratRun");
+        animatedView.gotoAndPlay("ratMove");
+
+        field.addChild(animatedView);
+//        sequence.play();
+
+//        trace(field.removeChildAt(2));
 //        field.removeChild(sequence);
-        trace(sequence.isPlaying);
+        trace(sequence.isPlaying, sequence2.isPlaying);
 
 //        field.pivot = new Point(300, 300);
 //        field.rotation = Math.PI / 2;

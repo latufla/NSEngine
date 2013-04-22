@@ -28,6 +28,15 @@ public class AssetsLib {
     [Embed(source="../../../assets/ratRunDesc.xml", mimeType="application/octet-stream")]
     private const RatRunXMLClass:Class;
 
+
+    public static const RAT_MOVE:String = "ratMove";
+    [Embed(source="../../../assets/ratMove.png")]
+    private const RatMoveViewClass:Class;
+
+    [Embed(source="../../../assets/ratMoveDesc.xml", mimeType="application/octet-stream")]
+    private const RatMoveXMLClass:Class;
+
+
     private var _assets:Array/* String -> Class */;
     private var _assetsDesc:Array/* String -> XML */;
 
@@ -75,6 +84,9 @@ public class AssetsLib {
 
         _assets[RAT_RUN] = RatRunViewClass;
         _assetsDesc[RAT_RUN] = RatRunXMLClass;
+
+        _assets[RAT_MOVE] = RatMoveViewClass;
+        _assetsDesc[RAT_MOVE] = RatMoveXMLClass;
     }
 }
 }
