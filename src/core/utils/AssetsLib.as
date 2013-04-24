@@ -20,6 +20,10 @@ public class AssetsLib {
     [Embed(source="../../../assets/levels/1/level.jpg")]
     private const Level1ViewClass:Class
 
+    public static const LEVEL_BORDERS_1:String = "levelBorders1";
+    [Embed(source="../../../assets/levels/1/borders.png")]
+    private const LevelBorders1ViewClass:Class
+
 
     public static const RAT_RUN:String = "ratRun";
     [Embed(source="../../../assets/ratRun.png")]
@@ -81,6 +85,7 @@ public class AssetsLib {
 
         _assets[BALL] = BallViewClass;
         _assets[LEVEL_1] = Level1ViewClass;
+        _assets[LEVEL_BORDERS_1] = LevelBorders1ViewClass;
 
         _assets[RAT_RUN] = RatRunViewClass;
         _assetsDesc[RAT_RUN] = RatRunXMLClass;

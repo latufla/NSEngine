@@ -8,6 +8,9 @@
             <entry library-id="fc8c7934-78c9-4027-ab81-acffad7a1dcc">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-id="b9a9a64d-f7a8-4795-9c20-8105cda1dacc">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="flex4sdk" />
         </dependencies>
@@ -31,6 +34,16 @@
         <properties id="fc8c7934-78c9-4027-ab81-acffad7a1dcc" />
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/starling.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="b9a9a64d-f7a8-4795-9c20-8105cda1dacc" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/nape-release.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
