@@ -31,5 +31,14 @@ public class CollectionUtils {
         }
         return null;
     }
+
+    public static function removeElement(v:*, e:*):void{
+        if(!v)
+            return;
+
+        var idx:int = v.indexOf(e);
+        if(idx != -1)
+            v.splice(idx, 1);
+    }
 }
 }
