@@ -23,6 +23,7 @@ import nape.geom.Vec2;
 import nape.phys.Body;
 import nape.phys.BodyType;
 import nape.shape.Circle;
+import nape.shape.ShapeList;
 import nape.space.Space;
 import nape.util.BitmapDebug;
 
@@ -268,6 +269,18 @@ public class PhysEngineConnector {
         }
 
         return null;
+    }
+
+    public function updateShapes(obj:ObjectBase):void {
+        var physObj:Body = _physObjects[obj];
+
+        var shapes:ShapeList = physObj.shapes;
+        var n:uint = shapes.length;
+        var m:uint = obj.shapes.length;
+        for (var i:int = 0; i < n && i < m; i++){
+            obj.shapes[i].updatePhysEngineObj(shapes.at(i));
+        }
+        physObj.align();
     }
 }
 }

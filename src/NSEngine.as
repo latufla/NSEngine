@@ -8,6 +8,7 @@ import core.utils.AssetsLib;
 import core.utils.graphic.GraphicsEngineConnector;
 import core.utils.phys.CustomCircle;
 import core.utils.phys.CustomMaterial;
+import core.utils.phys.CustomPolygon;
 import core.utils.phys.CustomShape;
 import core.view.AnimatedView;
 import core.view.FieldView;
@@ -21,6 +22,7 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.geom.Point;
+import flash.geom.Rectangle;
 
 import nape.util.BitmapDebug;
 
@@ -48,13 +50,28 @@ public class NSEngine extends Sprite {
 
         var fieldController:FieldController = FieldController.create(field);
 
-        var rect:ObjectBase = ObjectBase.create(new Point(100, 100), new <CustomShape>[new CustomCircle(50)], new CustomMaterial(), 1);
+        // circle
+        var circle:ObjectBase = ObjectBase.create(new Point(100, 100), new <CustomShape>[new CustomCircle(50)], new CustomMaterial(), 1);
+        circle.libDesc = AssetsLib.BALL;
+        (circle.shapes[0] as CustomCircle).radius = 30;
+        circle.updateShapes();
+
+        var circleController:ControllerBase = ControllerBase.create(circle);
+        circleController.draw();
+
+        fieldController.add(circleController);
+
+        // rect
+        var rect:ObjectBase = ObjectBase.create(new Point(200, 100), new <CustomShape>[new CustomPolygon(0, 0, 100, 100)], new CustomMaterial(), 1);
         rect.libDesc = AssetsLib.BALL;
+        (rect.shapes[0] as CustomPolygon).size = new Rectangle(0, 0, 70, 100);
+        rect.updateShapes();
 
         var rectController:ControllerBase = ControllerBase.create(rect);
         rectController.draw();
 
         fieldController.add(rectController);
+
         fieldController.startBehaviors();
 
         fieldController.doStep(1/60, _debugView);

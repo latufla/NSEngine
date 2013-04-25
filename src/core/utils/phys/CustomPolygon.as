@@ -11,10 +11,10 @@ import flash.geom.Rectangle;
 import nape.shape.Polygon;
 import nape.shape.Shape;
 
-public class CustomQuad extends CustomShape{
+public class CustomPolygon extends CustomShape{
 
     private var _size:Rectangle;
-    public function CustomQuad(x:int, y:int, w:int, h:int) {
+    public function CustomPolygon(x:int, y:int, w:int, h:int) {
         _size = new Rectangle(x, y, w, h);
     }
 
@@ -26,12 +26,24 @@ public class CustomQuad extends CustomShape{
         _size = value;
     }
 
-    public function clone():CustomQuad{
-        return new CustomQuad(_size.x, _size.y, _size.width, _size.height);
+    public function clone():CustomPolygon{
+        return new CustomPolygon(_size.x, _size.y, _size.width, _size.height);
     }
 
     override public function toPhysEngineObj():Shape{
         return new Polygon(Polygon.rect(_size.x, _size.y, _size.width, _size.height));
+    }
+
+    override public function updatePhysEngineObj(s:Shape):void{
+        var rect:Polygon = toPhysEngineObj() as Polygon;
+
+        while(!(s as Polygon).localVerts.empty()){
+            (s as Polygon).localVerts.pop();
+        }
+
+        while(!rect.localVerts.empty()){
+            (s as Polygon).localVerts.push(rect.localVerts.shift());
+        }
     }
 }
 }

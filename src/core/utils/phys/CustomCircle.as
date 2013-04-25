@@ -30,5 +30,9 @@ public class CustomCircle extends CustomShape {
     public function set radius(value:uint):void {
         _radius = value;
     }
+
+    override public function updatePhysEngineObj(s:Shape):void{
+        (s as Circle).radius = _radius;
+    }
 }
 }

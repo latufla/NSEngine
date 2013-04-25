@@ -12,6 +12,9 @@ public class CustomShape {
     public function CustomShape() {
     }
 
+    public function updatePhysEngineObj(s:Shape):void{
+    }
+
     public function toPhysEngineObj():Shape{
         return null;
     }

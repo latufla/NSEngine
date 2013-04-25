@@ -10,7 +10,7 @@ package core.model {
 import core.controller.ControllerBase;
 import core.utils.AssetsLib;
 import core.utils.phys.CustomMaterial;
-import core.utils.phys.CustomQuad;
+import core.utils.phys.CustomPolygon;
 import core.utils.phys.CustomShape;
 import core.utils.phys.PhysEngineConnector;
 
@@ -23,7 +23,7 @@ public class ObjectBase {
     protected var _name:String = "dummy";
     protected var _libDesc:String = "";
 
-    protected static const DEFAULT_SHAPE:CustomQuad = new CustomQuad(0, 0, 30, 60);
+    protected static const DEFAULT_SHAPE:CustomPolygon = new CustomPolygon(0, 0, 30, 60);
     protected static const DEFAULT_POSITION:Point = new Point(0, 0);
 
     protected var _shapes:Vector.<CustomShape>;
@@ -110,6 +110,10 @@ public class ObjectBase {
 
         if(_material)
             PhysEngineConnector.instance.setMaterial(this, _material);
+    }
+
+    public function updateShapes():void{
+        PhysEngineConnector.instance.updateShapes(this);
     }
 
     public function get material():CustomMaterial {
