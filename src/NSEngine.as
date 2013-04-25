@@ -51,10 +51,9 @@ public class NSEngine extends Sprite {
         var fieldController:FieldController = FieldController.create(field);
 
         // circle
-        var circle:ObjectBase = ObjectBase.create(new Point(100, 100), new <CustomShape>[new CustomCircle(50)], new CustomMaterial(), 1);
+         var circle:ObjectBase = ObjectBase.create(new Point(100, 100), new <CustomShape>[new CustomCircle(50)], new CustomMaterial(), 1);
         circle.libDesc = AssetsLib.BALL;
         (circle.shapes[0] as CustomCircle).radius = 30;
-        circle.updateShapes();
 
         var circleController:ControllerBase = ControllerBase.create(circle);
         circleController.draw();
@@ -62,10 +61,12 @@ public class NSEngine extends Sprite {
         fieldController.add(circleController);
 
         // rect
-        var rect:ObjectBase = ObjectBase.create(new Point(200, 100), new <CustomShape>[new CustomPolygon(0, 0, 100, 100)], new CustomMaterial(), 1);
+        var vs:Vector.<Point> = CustomPolygon.rect(new Rectangle(0, 0, 100, 100));
+        var rect:ObjectBase = ObjectBase.create(new Point(200, 100), new <CustomShape>[new CustomPolygon(vs)], new CustomMaterial(), 1);
         rect.libDesc = AssetsLib.BALL;
-        (rect.shapes[0] as CustomPolygon).size = new Rectangle(0, 0, 70, 100);
-        rect.updateShapes();
+
+        vs = CustomPolygon.rect(new Rectangle(0, 0, 120, 80));
+        (rect.shapes[0] as CustomPolygon).vertexes = vs;
 
         var rectController:ControllerBase = ControllerBase.create(rect);
         rectController.draw();

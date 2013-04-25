@@ -6,44 +6,66 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.utils.phys {
+import flash.geom.Point;
 import flash.geom.Rectangle;
+
+import nape.geom.Vec2;
+
+import nape.geom.Vec2List;
 
 import nape.shape.Polygon;
 import nape.shape.Shape;
 
 public class CustomPolygon extends CustomShape{
 
-    private var _size:Rectangle;
-    public function CustomPolygon(x:int, y:int, w:int, h:int) {
-        _size = new Rectangle(x, y, w, h);
+    private var _vertexes:Vector.<Point>;
+    public function CustomPolygon(vertexes:Vector.<Point>) {
+        _vertexes = vertexes.concat();
     }
 
-    public function get size():Rectangle {
-        return _size;
-    }
-
-    public function set size(value:Rectangle):void {
-        _size = value;
-    }
-
-    public function clone():CustomPolygon{
-        return new CustomPolygon(_size.x, _size.y, _size.width, _size.height);
+    public static function rect(size:Rectangle):Vector.<Point>{
+        return new <Point>[new Point(size.x, size.y), new Point(size.width, size.y), new Point(size.width, size.height), new Point(0, size.height)];
     }
 
     override public function toPhysEngineObj():Shape{
-        return new Polygon(Polygon.rect(_size.x, _size.y, _size.width, _size.height));
+        return new Polygon(vertexesAsVec2List);
     }
 
-    override public function updatePhysEngineObj(s:Shape):void{
-        var rect:Polygon = toPhysEngineObj() as Polygon;
+    override protected function updatePhysEngineObj(s:Shape):void{
+        var vs:Vec2List = vertexesAsVec2List;
 
         while(!(s as Polygon).localVerts.empty()){
             (s as Polygon).localVerts.pop();
         }
 
-        while(!rect.localVerts.empty()){
-            (s as Polygon).localVerts.push(rect.localVerts.shift());
+        while(!vs.empty()){
+            (s as Polygon).localVerts.push(vs.shift());
         }
+        super.updatePhysEngineObj(s);
     }
+
+    public function clone():CustomPolygon{
+        return new CustomPolygon(_vertexes.concat());
+    }
+
+    public function get vertexes():Vector.<Point> {
+        return _vertexes;
+    }
+
+    public function set vertexes(value:Vector.<Point>):void {
+        _vertexes = value;
+        updatePhysEngineObj(_shape);
+    }
+
+    private function get vertexesAsVec2List():Vec2List{
+        var vs:Vec2List = new Vec2List();
+        var n:uint = _vertexes.length;
+        for(var i:uint = 0; i < n; i++){
+            vs.push(new Vec2(_vertexes[i].x, _vertexes[i].y));
+        }
+        return vs;
+    }
+
+
 }
 }

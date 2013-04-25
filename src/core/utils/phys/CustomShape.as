@@ -9,14 +9,22 @@ package core.utils.phys {
 import nape.shape.Shape;
 
 public class CustomShape {
+
+    protected var _shape:Shape;
+
     public function CustomShape() {
     }
 
-    public function updatePhysEngineObj(s:Shape):void{
+    protected function updatePhysEngineObj(s:Shape):void{
+        s.body.align();
     }
 
     public function toPhysEngineObj():Shape{
         return null;
+    }
+
+    public function set shape(value:Shape):void {
+        _shape = value;
     }
 }
 }
