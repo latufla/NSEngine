@@ -8,7 +8,7 @@
 package core.model {
 
 import core.controller.ControllerBase;
-import core.utils.AssetsLib;
+import core.utils.assets.AssetsLib;
 import core.utils.phys.CustomMaterial;
 import core.utils.phys.CustomPolygon;
 import core.utils.phys.CustomShape;

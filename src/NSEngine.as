@@ -4,7 +4,8 @@ import core.controller.ControllerBase;
 import core.controller.FieldController;
 import core.model.Field;
 import core.model.ObjectBase;
-import core.utils.AssetsLib;
+import core.utils.assets.AssetsHeap;
+import core.utils.assets.AssetsLib;
 import core.utils.graphic.GraphicsEngineConnector;
 import core.utils.phys.CustomCircle;
 import core.utils.phys.CustomMaterial;
@@ -26,6 +27,9 @@ import flash.geom.Rectangle;
 
 import nape.util.BitmapDebug;
 
+import sqballs.utils.FieldLib;
+import sqballs.utils.assets.SQAssetsHeap;
+
 
 public class NSEngine extends Sprite {
 
@@ -44,15 +48,14 @@ public class NSEngine extends Sprite {
     }
 
     private function onStarted(e:*):void {
-        var borders:Bitmap = AssetsLib.instance.getAssetBy(AssetsLib.LEVEL_BORDERS_1);
-        var field:Field = new Field(borders.bitmapData);
-        field.libDesc = AssetsLib.LEVEL_1;
+        AssetsLib.instance.init(new SQAssetsHeap()); // TODO: think about special place
 
+        var field:Field = FieldLib.getFieldByLevel();
         var fieldController:FieldController = FieldController.create(field);
 
         // circle
          var circle:ObjectBase = ObjectBase.create(new Point(100, 100), new <CustomShape>[new CustomCircle(50)], new CustomMaterial(), 1);
-        circle.libDesc = AssetsLib.BALL;
+        circle.libDesc = SQAssetsHeap.BALL;
         (circle.shapes[0] as CustomCircle).radius = 30;
 
         var circleController:ControllerBase = ControllerBase.create(circle);
@@ -63,7 +66,7 @@ public class NSEngine extends Sprite {
         // rect
         var vs:Vector.<Point> = CustomPolygon.rect(new Rectangle(0, 0, 100, 100));
         var rect:ObjectBase = ObjectBase.create(new Point(200, 100), new <CustomShape>[new CustomPolygon(vs)], new CustomMaterial(), 1);
-        rect.libDesc = AssetsLib.BALL;
+        rect.libDesc = SQAssetsHeap.BALL;
 
         vs = CustomPolygon.rect(new Rectangle(0, 0, 120, 80));
         (rect.shapes[0] as CustomPolygon).vertexes = vs;

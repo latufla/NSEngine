@@ -8,14 +8,10 @@
 package core.controller {
 import core.behaviors.BehaviorBase;
 import core.model.ObjectBase;
-import core.utils.AssetsLib;
 import core.utils.CollectionUtils;
 import core.utils.DisplayObjectUtil;
-import core.view.FieldView;
 import core.view.ViewBase;
 
-import flash.display.Bitmap;
-import flash.geom.Point;
 
 public class ControllerBase {
 
