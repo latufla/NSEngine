@@ -27,7 +27,7 @@ import flash.geom.Rectangle;
 
 import nape.util.BitmapDebug;
 
-import sqballs.utils.FieldLib;
+import sqballs.utils.LevelsLib;
 import sqballs.utils.assets.SQAssetsHeap;
 
 
@@ -50,7 +50,7 @@ public class NSEngine extends Sprite {
     private function onStarted(e:*):void {
         AssetsLib.instance.init(new SQAssetsHeap()); // TODO: think about special place
 
-        var field:Field = FieldLib.getFieldByLevel();
+        var field:Field = LevelsLib.getFieldByLevel();
         var fieldController:FieldController = FieldController.create(field);
 
         // circle
