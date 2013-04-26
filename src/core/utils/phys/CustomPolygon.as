@@ -65,7 +65,5 @@ public class CustomPolygon extends CustomShape{
         }
         return vs;
     }
-
-
 }
 }
