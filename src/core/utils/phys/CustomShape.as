@@ -26,5 +26,9 @@ public class CustomShape {
     public function set shape(value:Shape):void {
         _shape = value;
     }
+
+    public function clone():CustomShape{
+        return null;
+    }
 }
 }

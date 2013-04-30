@@ -13,7 +13,6 @@ import core.utils.phys.PhysEngineConnector;
 
 import flash.geom.Point;
 import flash.geom.Rectangle;
-
 import sqballs.utils.Config;
 
 public class Ball extends SQObjectBase{
@@ -34,7 +33,7 @@ public class Ball extends SQObjectBase{
     public static function create(libDesc:String, pos:Point, radius:int, material:CustomMaterial):Ball{
         var obj:Ball = new Ball();
         obj.libDesc = libDesc;
-        obj.shapes = new <CustomShape>[DEFAULT_SHAPE];
+        obj.shapes = new <CustomShape>[DEFAULT_SHAPE.clone()];
         obj.material = material;
         obj.position = pos;
         obj.radius = radius;
@@ -49,6 +48,7 @@ public class Ball extends SQObjectBase{
         _radius = value;
         _rectSize.width = _rectSize.height = _radius * 2;
 
+        (_shapes[0] as CustomCircle).radius = _radius;
         PhysEngineConnector.instance.resizeTopmostCircle(this, _radius);
     }
 

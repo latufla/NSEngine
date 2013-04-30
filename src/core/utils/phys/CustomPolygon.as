@@ -44,7 +44,7 @@ public class CustomPolygon extends CustomShape{
         super.updatePhysEngineObj(s);
     }
 
-    public function clone():CustomPolygon{
+    override public function clone():CustomShape{
         return new CustomPolygon(_vertexes.concat());
     }
 

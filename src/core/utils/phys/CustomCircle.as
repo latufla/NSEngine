@@ -23,6 +23,10 @@ public class CustomCircle extends CustomShape {
         return new Circle(_radius, new Vec2(_radius, _radius));
     }
 
+    override public function clone():CustomShape{
+        return new CustomCircle(_radius);
+    }
+
     public function get radius():uint {
         return _radius;
     }

@@ -37,7 +37,7 @@ public class ObjectBase {
 
     protected function init():void {
         PhysEngineConnector.instance.initObject(this);
-        PhysEngineConnector.instance.setShapes(this, new <CustomShape>[DEFAULT_SHAPE]);
+        PhysEngineConnector.instance.setShapes(this, new <CustomShape>[DEFAULT_SHAPE.clone()]);
         PhysEngineConnector.instance.setMaterial(this, new CustomMaterial());
         PhysEngineConnector.instance.setPosition(this, DEFAULT_POSITION);
     }
