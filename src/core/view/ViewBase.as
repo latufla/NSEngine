@@ -143,6 +143,14 @@ public class ViewBase {
     }
     // END PIVOT
 
+    public function get scaleX():Number{
+        return  GraphicsEngineConnector.instance.getScaleX(this);
+    }
+
+    public function get scaleY():Number{
+        return  GraphicsEngineConnector.instance.getScaleY(this);
+    }
+
 
     public function get bounds():Rectangle{
         return GraphicsEngineConnector.instance.getBounds(this);

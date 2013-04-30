@@ -113,8 +113,8 @@ public class ControllerBase {
     protected function align():void{
         _view.position = _object.position;
 
-        _view.pivotX = _view.width / 2; // always center point, unconnected to phys
-        _view.pivotY = _view.height / 2;
+        _view.pivotX = (_view.width / 2) / _view.scaleX; // always center point, unconnected to phys
+        _view.pivotY =  (_view.height / 2) / _view.scaleY;
 
         // change _view width  when override if needed
     }

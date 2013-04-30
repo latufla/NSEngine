@@ -68,13 +68,6 @@ public class PhysEngineConnector {
         _physObjects[obj] ||= new Body(BodyType.DYNAMIC);
     }
 
-    public function resizeTopmostCircle(obj:ObjectBase, r:uint):void{
-        var physObj:Body = _physObjects[obj];
-        var topmostCircle:Circle =  physObj.shapes.at(0) as Circle;
-        if(topmostCircle)
-            topmostCircle.radius = r;
-    }
-
     public function addObjectToField(f:FieldController, o:ObjectBase):void {
         _physObjects[o].space = _spaces[f];
     }

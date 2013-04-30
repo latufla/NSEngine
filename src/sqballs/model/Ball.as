@@ -9,7 +9,6 @@ package sqballs.model {
 import core.utils.phys.CustomCircle;
 import core.utils.phys.CustomMaterial;
 import core.utils.phys.CustomShape;
-import core.utils.phys.PhysEngineConnector;
 
 import flash.geom.Point;
 import flash.geom.Rectangle;
@@ -47,9 +46,7 @@ public class Ball extends SQObjectBase{
     public function set radius(value:uint):void {
         _radius = value;
         _rectSize.width = _rectSize.height = _radius * 2;
-
         (_shapes[0] as CustomCircle).radius = _radius;
-        PhysEngineConnector.instance.resizeTopmostCircle(this, _radius);
     }
 
     public function get area():Number {

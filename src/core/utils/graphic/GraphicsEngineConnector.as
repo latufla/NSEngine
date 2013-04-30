@@ -211,6 +211,15 @@ public class GraphicsEngineConnector {
     }
     // END PIVOT
 
+    public function getScaleX(view:ViewBase):Number{
+        var v:DisplayObject = _views[view];
+        return v.scaleX;
+    }
+
+    public function getScaleY(view:ViewBase):Number{
+        var v:DisplayObject = _views[view];
+        return v.scaleY;
+    }
 
     // DISPLAY LIST
     public function getBounds(view:ViewBase):Rectangle{
