@@ -2,8 +2,8 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="NSEngine">
     <configurations>
-      <configuration name="NSEngine" pure-as="true" main-class="NSEngine" output-file="NSEngine.swf" output-folder="$MODULE_DIR$/out/production/NSEngine">
-        <dependencies target-player="11.1">
+      <configuration name="NSEngine" main-class="NSEngine" output-file="NSEngine.swf" output-folder="$MODULE_DIR$/out/production/NSEngine">
+        <dependencies target-player="11.4">
           <entries>
             <entry library-id="fc8c7934-78c9-4027-ab81-acffad7a1dcc">
               <dependency linkage="Merged" />
@@ -12,7 +12,7 @@
               <dependency linkage="Merged" />
             </entry>
           </entries>
-          <sdk name="flex4sdk" />
+          <sdk name="flex4" />
         </dependencies>
         <compiler-options />
         <packaging-air-desktop />
@@ -27,7 +27,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="flex4sdk" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="flex4" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library type="flex">

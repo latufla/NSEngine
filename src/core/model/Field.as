@@ -22,5 +22,6 @@ public class Field extends ObjectBase{
     override protected function init():void{
         PhysEngineConnector.instance.createBorders(this, _border);
     }
+
 }
 }

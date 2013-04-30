@@ -1,36 +1,21 @@
 package {
 
-import core.controller.ControllerBase;
-import core.controller.FieldController;
-import core.model.Field;
-import core.model.ObjectBase;
-import core.utils.assets.AssetsHeap;
 import core.utils.assets.AssetsLib;
 import core.utils.graphic.GraphicsEngineConnector;
-import core.utils.phys.CustomCircle;
-import core.utils.phys.CustomMaterial;
-import core.utils.phys.CustomPolygon;
-import core.utils.phys.CustomShape;
-import core.view.AnimatedView;
-import core.view.FieldView;
-import core.view.SequenceView;
-import core.view.ViewBase;
-
-import flash.display.Bitmap;
-
 import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
-import flash.geom.Point;
-import flash.geom.Rectangle;
 
 import nape.util.BitmapDebug;
 
-import sqballs.utils.LevelsLib;
+import sqballs.Engine;
+
+import sqballs.utils.Config;
 import sqballs.utils.assets.SQAssetsHeap;
 
 
+[SWF(width="1024", height="768", backgroundColor="#000000", frameRate="60")]
 public class NSEngine extends Sprite {
 
     private var _debugView:BitmapDebug = new BitmapDebug(700, 700);
@@ -42,52 +27,56 @@ public class NSEngine extends Sprite {
     private function onAddedToStage(e:Event):void {
         stage.scaleMode = StageScaleMode.NO_SCALE;
         stage.align = StageAlign.TOP_LEFT;
+        Config.stage = stage;
 
         GraphicsEngineConnector.instance.init(stage);
         GraphicsEngineConnector.instance.start(onStarted);
     }
 
     private function onStarted(e:*):void {
-        AssetsLib.instance.init(new SQAssetsHeap()); // TODO: think about special place
+        AssetsLib.instance.init(new SQAssetsHeap());
+        new Engine();
 
-        var field:Field = LevelsLib.getFieldByLevel();
-        var fieldController:FieldController = FieldController.create(field);
-
-        // circle
-         var circle:ObjectBase = ObjectBase.create(new Point(100, 100), new <CustomShape>[new CustomCircle(50)], new CustomMaterial(), 1);
-        circle.libDesc = SQAssetsHeap.BALL;
-        (circle.shapes[0] as CustomCircle).radius = 30;
-
-        var circleController:ControllerBase = ControllerBase.create(circle);
-        circleController.draw();
-
-        fieldController.add(circleController);
-
-        // rect
-        var vs:Vector.<Point> = CustomPolygon.rect(new Rectangle(0, 0, 100, 100));
-        var rect:ObjectBase = ObjectBase.create(new Point(200, 100), new <CustomShape>[new CustomPolygon(vs)], new CustomMaterial(), 1);
-        rect.libDesc = SQAssetsHeap.BALL;
-
-        vs = CustomPolygon.rect(new Rectangle(0, 0, 120, 80));
-        (rect.shapes[0] as CustomPolygon).vertexes = vs;
-
-        var rectController:ControllerBase = ControllerBase.create(rect);
-        rectController.draw();
-
-        fieldController.add(rectController);
-
-        fieldController.startBehaviors();
-
-        fieldController.doStep(1/60, _debugView);
-        fieldController.draw();
-
-
-        rect.position = new Point(200, 200);
-        fieldController.doStep(1/60, _debugView);
-        fieldController.draw();
-
-        _debugView.display.alpha = 0.5;
-        addChild(_debugView.display);
+//        AssetsLib.instance.init(new SQAssetsHeap()); // TODO: think about special place
+//
+//        var field:Field = LevelsLib.getFieldByLevel();
+//        var fieldController:FieldController = FieldController.create(field);
+//
+//        // circle
+//         var circle:ObjectBase = ObjectBase.create(new Point(100, 100), new <CustomShape>[new CustomCircle(50)], new CustomMaterial(), 1);
+//        circle.libDesc = SQAssetsHeap.BALL;
+//        (circle.shapes[0] as CustomCircle).radius = 30;
+//
+//        var circleController:ControllerBase = ControllerBase.create(circle);
+//        circleController.draw();
+//
+//        fieldController.add(circleController);
+//
+//        // rect
+//        var vs:Vector.<Point> = CustomPolygon.rect(new Rectangle(0, 0, 100, 100));
+//        var rect:ObjectBase = ObjectBase.create(new Point(200, 100), new <CustomShape>[new CustomPolygon(vs)], new CustomMaterial(), 1);
+//        rect.libDesc = SQAssetsHeap.BALL;
+//
+//        vs = CustomPolygon.rect(new Rectangle(0, 0, 120, 80));
+//        (rect.shapes[0] as CustomPolygon).vertexes = vs;
+//
+//        var rectController:ControllerBase = ControllerBase.create(rect);
+//        rectController.draw();
+//
+//        fieldController.add(rectController);
+//
+//        fieldController.startBehaviors();
+//
+//        fieldController.doStep(1/60, _debugView);
+//        fieldController.draw();
+//
+//
+//        rect.position = new Point(200, 200);
+//        fieldController.doStep(1/60, _debugView);
+//        fieldController.draw();
+//
+//        _debugView.display.alpha = 0.5;
+//        addChild(_debugView.display);
     }
 
 //    private function onStarted(e:*):void {
