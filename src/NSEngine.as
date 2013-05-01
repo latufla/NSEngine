@@ -1,24 +1,16 @@
 package {
 
-import core.utils.assets.AssetsLib;
 import core.utils.graphic.GraphicsEngineConnector;
 import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 
-import nape.util.BitmapDebug;
-
 import sqballs.SQEngine;
-
 import sqballs.utils.Config;
-import sqballs.utils.assets.SQAssetsHeap;
-
 
 [SWF(width="1024", height="768", backgroundColor="#000000", frameRate="60")]
 public class NSEngine extends Sprite {
-
-    private var _debugView:BitmapDebug = new BitmapDebug(700, 700);
 
     public function NSEngine() {
         addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
@@ -34,7 +26,6 @@ public class NSEngine extends Sprite {
     }
 
     private function onStarted(e:*):void {
-
         new SQEngine();
     }
 }
