@@ -8,6 +8,7 @@
 package core.utils.assets {
 
 import flash.display.Bitmap;
+import flash.display.DisplayObject;
 
 public class AssetsLib {
 
@@ -26,8 +27,8 @@ public class AssetsLib {
         _heap = heap;
     }
 
-    public function getAssetBy(name:String):Bitmap{
-        var asset:Bitmap;
+    public function getAssetBy(name:String):*{
+        var asset:*;
         try{
             asset = new _heap.assets[name]();
         } catch (e:Error){

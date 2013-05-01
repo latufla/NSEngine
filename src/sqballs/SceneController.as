@@ -8,6 +8,7 @@
 package sqballs {
 import core.utils.DisplayObjectUtil;
 import core.utils.EventHeap;
+import core.utils.assets.AssetsLib;
 import core.utils.graphic.StarlingSceneView;
 
 import flash.display.MovieClip;
@@ -25,9 +26,9 @@ import sqballs.event.GameEvent;
 import sqballs.model.info.GameInfo;
 import sqballs.model.info.UserInfo;
 import sqballs.utils.Config;
-import sqballs.utils.FlashAssetsLib;
 import sqballs.utils.FontUtil;
 import sqballs.utils.LevelsLib;
+import sqballs.utils.assets.SQAssetsHeap;
 import sqballs.utils.tr.en.Tr;
 import sqballs.view.DialogWindowView;
 
@@ -66,7 +67,7 @@ public class SceneController extends EventDispatcher{
     }
 
     private function initRestartButton():void {
-        _restartButton = FlashAssetsLib.instance.createAssetBy(FlashAssetsLib.REFRESH_BUTTON);
+        _restartButton = AssetsLib.instance.getAssetBy(SQAssetsHeap.REFRESH_BUTTON);
         _restartButton.x = RESTART_BUTTON_POS.x;
         _restartButton.y = RESTART_BUTTON_POS.y;
         _restartButton.useHandCursor = _restartButton.buttonMode = true;

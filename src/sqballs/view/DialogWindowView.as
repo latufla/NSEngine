@@ -7,6 +7,7 @@
  */
 package sqballs.view {
 import core.utils.DisplayObjectUtil;
+import core.utils.assets.AssetsLib;
 
 import flash.display.DisplayObjectContainer;
 import flash.display.MovieClip;
@@ -15,8 +16,8 @@ import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 
-import sqballs.utils.FlashAssetsLib;
 import sqballs.utils.FontUtil;
+import sqballs.utils.assets.SQAssetsHeap;
 import sqballs.utils.tr.en.Tr;
 
 public class DialogWindowView extends Sprite{
@@ -32,7 +33,7 @@ public class DialogWindowView extends Sprite{
     }
 
     private function init():void{
-        _container = FlashAssetsLib.instance.createAssetBy(FlashAssetsLib.DIALOG_WINDOW) as DisplayObjectContainer;
+        _container = AssetsLib.instance.getAssetBy(SQAssetsHeap.DIALOG_WINDOW);
         addChild(_container);
 
         closeButton.buttonMode =  closeButton.useHandCursor = true;

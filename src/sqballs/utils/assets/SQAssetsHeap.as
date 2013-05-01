@@ -10,6 +10,18 @@ import core.utils.assets.AssetsHeap;
 
 public class SQAssetsHeap extends AssetsHeap{
 
+    public static const DIALOG_WINDOW:String = "dialogWindow";
+    [Embed(source="../../../../assets/gui/GUI.swf", symbol="DialogWindowView")]
+    private const DialogWindowClass:Class;
+
+    public static const REFRESH_BUTTON:String = "refreshButton";
+    [Embed(source="../../../../assets/gui/GUI.swf", symbol="RefreshButton")]
+    private const RefreshViewClass:Class;
+
+    public static const PRELOADER_VIEW:String = "preloaderView";
+    [Embed(source="../../../../assets/gui/GUI.swf", symbol="PreloaderView")]
+    private const PreloaderViewClass:Class;
+
     public static const BALL:String = "ball";
     [Embed(source="../../../../assets/ball.png")]
     private const BallViewClass:Class;
@@ -44,6 +56,10 @@ public class SQAssetsHeap extends AssetsHeap{
 
     override protected function init():void{
         super.init();
+
+        _assets[DIALOG_WINDOW] = DialogWindowClass;
+        _assets[REFRESH_BUTTON] = RefreshViewClass;
+        _assets[PRELOADER_VIEW] = PreloaderViewClass;
 
         _assets[BALL] = BallViewClass;
         _assets[LEVEL_1] = Level1ViewClass;

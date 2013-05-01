@@ -9,12 +9,13 @@ package sqballs {
 
 import core.utils.DisplayObjectUtil;
 import core.utils.FPSCounter;
+import core.utils.assets.AssetsLib;
 
 import flash.display.MovieClip;
 import flash.display.Sprite;
 
 import sqballs.utils.Config;
-import sqballs.utils.FlashAssetsLib;
+import sqballs.utils.assets.SQAssetsHeap;
 
 
 public class Engine extends Sprite{
@@ -49,7 +50,7 @@ public class Engine extends Sprite{
     }
 
     private function showPreloader():void{
-        _preloader = FlashAssetsLib.instance.createAssetBy(FlashAssetsLib.PRELOADER_VIEW);
+        _preloader = AssetsLib.instance.getAssetBy(SQAssetsHeap.PRELOADER_VIEW);
         _preloader.play();
         Config.stage.addChild(_preloader);
         DisplayObjectUtil.alignByCenter(_preloader, Config.DEFAULT_VIEWPORT_SIZE.width, Config.DEFAULT_VIEWPORT_SIZE.height);
