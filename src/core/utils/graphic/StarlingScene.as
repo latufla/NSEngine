@@ -8,14 +8,14 @@
 package core.utils.graphic {
 import starling.display.Sprite;
 
-public class StarlingSceneView extends Sprite{
+public class StarlingScene extends Sprite{
 
-    public static var _instance:StarlingSceneView;
-    public function StarlingSceneView() {
+    public static var _instance:StarlingScene;
+    public function StarlingScene() {
         _instance = this;
     }
 
-    public static function get instance():StarlingSceneView {
+    public static function get instance():StarlingScene {
         return _instance;
     }
 

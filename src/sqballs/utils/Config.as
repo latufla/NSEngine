@@ -16,7 +16,7 @@ import flash.geom.Rectangle;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
 
-import sqballs.SceneController;
+import sqballs.SQSceneController;
 import sqballs.controller.SQFieldController;
 import sqballs.model.info.GameInfo;
 
@@ -31,7 +31,7 @@ public class Config {
     public static var stage:Stage;
 
     public static var fieldController:SQFieldController;
-    public static var sceneController:SceneController;
+    public static var sceneController:SQSceneController;
     public static var gameInfo:GameInfo;
    // --------
 
@@ -87,7 +87,7 @@ public class Config {
 
     private static function onLoadError(err:* = null):void{
         var cb:Function = _loadHandlers[1];
-        if(cb)
+        if(cb != null)
             cb();
     }
 

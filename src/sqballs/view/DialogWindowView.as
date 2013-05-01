@@ -102,7 +102,7 @@ public class DialogWindowView extends Sprite{
         DisplayObjectUtil.tryRemove(this);
         removeEventListeners();
 
-        if(_closeButtonCallback)
+        if(_closeButtonCallback != null)
             _closeButtonCallback();
     }
 
@@ -110,7 +110,7 @@ public class DialogWindowView extends Sprite{
         DisplayObjectUtil.tryRemove(this);
         removeEventListeners();
 
-        if(_cancelButtonCallback)
+        if(_cancelButtonCallback != null)
             _cancelButtonCallback();
     }
 
@@ -118,7 +118,7 @@ public class DialogWindowView extends Sprite{
         DisplayObjectUtil.tryRemove(this);
         removeEventListeners();
 
-        if(_okButtonCallback)
+        if(_okButtonCallback != null)
             _okButtonCallback();
     }
 }

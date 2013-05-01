@@ -7,6 +7,7 @@
  */
 package sqballs.controller {
 import core.behaviors.BehaviorBase;
+import core.controller.ControllerBase;
 import core.model.ObjectBase;
 import core.utils.DisplayObjectUtil;
 
@@ -16,12 +17,9 @@ import flash.geom.Point;
 
 import sqballs.model.Ball;
 
-import starling.display.DisplayObject;
-import starling.display.Image;
+public class BallController extends ControllerBase{
 
-public class BallController extends SQControllerBase{
-
-    private var _initialContentView:DisplayObject;
+//    private var _initialContentView:DisplayObject;
     private var _prevColor:uint;
 
     public function BallController() {

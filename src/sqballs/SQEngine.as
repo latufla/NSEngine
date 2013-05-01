@@ -8,7 +8,7 @@
 package sqballs {
 
 import core.utils.DisplayObjectUtil;
-import core.utils.FPSCounter;
+import core.utils.vendor.FPSCounter;
 import core.utils.assets.AssetsLib;
 
 import flash.display.MovieClip;
@@ -18,16 +18,18 @@ import sqballs.utils.Config;
 import sqballs.utils.assets.SQAssetsHeap;
 
 
-public class Engine extends Sprite{
+public class SQEngine extends Sprite{
 
     private var _preloader:MovieClip;
-    private var _scene:SceneController;
+    private var _scene:SQSceneController;
 
-    public function Engine() {
+    public function SQEngine() {
         init();
     }
 
     private function init():void {
+        AssetsLib.instance.init(new SQAssetsHeap());
+
         showPreloader();
         Config.load(onCompleteLoadConfig, onErrorLoadConfig);
     }
@@ -45,7 +47,7 @@ public class Engine extends Sprite{
     private function initScene():void {
         removePreloader();
 
-        _scene = new SceneController();
+        _scene = new SQSceneController();
         Config.stage.addChild(new FPSCounter(5, 2));
     }
 

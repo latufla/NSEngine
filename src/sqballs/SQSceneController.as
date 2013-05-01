@@ -9,7 +9,7 @@ package sqballs {
 import core.utils.DisplayObjectUtil;
 import core.utils.EventHeap;
 import core.utils.assets.AssetsLib;
-import core.utils.graphic.StarlingSceneView;
+import core.utils.graphic.StarlingScene;
 
 import flash.display.MovieClip;
 import flash.display.Sprite;
@@ -34,7 +34,7 @@ import sqballs.view.DialogWindowView;
 
 import starling.events.EnterFrameEvent;
 
-public class SceneController extends EventDispatcher{
+public class SQSceneController extends EventDispatcher{
     private static const RESTART_BUTTON_POS:Point = new Point(900, 2);
     private static const SIMULATION_STEP:Number = 1 / 60; // normally we use time between frames, but it`s acceptable for single player
 
@@ -47,7 +47,7 @@ public class SceneController extends EventDispatcher{
     private var _fieldController:SQFieldController;
     private var _fieldDebugView:BitmapDebug;
 
-    public function SceneController() {
+    public function SQSceneController() {
         init();
     }
 
@@ -98,7 +98,7 @@ public class SceneController extends EventDispatcher{
     // all game events come here
     private function onGameEvent(e:GameEvent):void{
         var handler:Function = _gameEventHandlers[e.type];
-        if(handler)
+        if(handler != null)
             handler(e.data);
     }
 
@@ -167,12 +167,12 @@ public class SceneController extends EventDispatcher{
 
     private function startSimulation():void{
         _restartButton.addEventListener(MouseEvent.CLICK, onRefreshButtonClick);
-        StarlingSceneView.instance.addEventListener(EnterFrameEvent.ENTER_FRAME, mainLoop);
+        StarlingScene.instance.addEventListener(EnterFrameEvent.ENTER_FRAME, mainLoop);
     }
 
     private function stopSimulation():void{
         _restartButton.removeEventListener(MouseEvent.CLICK, onRefreshButtonClick);
-        StarlingSceneView.instance.removeEventListener(EnterFrameEvent.ENTER_FRAME, mainLoop);
+        StarlingScene.instance.removeEventListener(EnterFrameEvent.ENTER_FRAME, mainLoop);
     }
 
     private function clear():void{

@@ -10,7 +10,6 @@ package sqballs.controller {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
 import core.controller.FieldController;
-import core.model.Field;
 import core.utils.phys.CustomMaterial;
 
 import sqballs.behaviors.control.ai.AIControlBehavior;
@@ -39,9 +38,6 @@ public class SQFieldController extends FieldController{
 
     override public function doStep(step:Number, debugView:* = null):void{
         super.doStep(step, debugView);
-
-//        if(!field.raceIsFinished)
-//            field.updateRaceProgress();
     }
 
     public function get playerBallController():BallController{

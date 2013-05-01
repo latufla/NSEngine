@@ -61,7 +61,7 @@ public class GraphicsEngineConnector {
         _classes[SequenceView] = MovieClip;
         _classes[AnimatedView] = Sprite;
 
-        _starling = new Starling(StarlingSceneView, stage);
+        _starling = new Starling(StarlingScene, stage);
     }
 
     public function start(onStarted:Function):void{
@@ -252,7 +252,7 @@ public class GraphicsEngineConnector {
     }
 
     public function addChildToScene(child:ViewBase):void{
-        var p:DisplayObjectContainer = StarlingSceneView.instance;
+        var p:DisplayObjectContainer = StarlingScene.instance;
         var c:DisplayObject = _views[child];
         if(p && c)
             p.addChild(c);

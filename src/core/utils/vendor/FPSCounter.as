@@ -5,7 +5,7 @@
  * Time: 17:39
  * To change this template use File | Settings | File Templates.
  */
-package core.utils{
+package core.utils.vendor{
 
 import flash.display.Sprite;
 import flash.events.Event;
