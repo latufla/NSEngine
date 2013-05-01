@@ -9,10 +9,10 @@ package sqballs {
 import core.utils.DisplayObjectUtil;
 import core.utils.EventHeap;
 import core.utils.assets.AssetsLib;
-import core.utils.graphic.StarlingScene;
 
 import flash.display.MovieClip;
 import flash.display.Sprite;
+import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.MouseEvent;
 import flash.geom.Point;
@@ -31,8 +31,6 @@ import sqballs.utils.LevelsLib;
 import sqballs.utils.assets.SQAssetsHeap;
 import sqballs.utils.tr.en.Tr;
 import sqballs.view.DialogWindowView;
-
-import starling.events.EnterFrameEvent;
 
 public class SQSceneController extends EventDispatcher{
     private static const RESTART_BUTTON_POS:Point = new Point(900, 2);
@@ -133,12 +131,11 @@ public class SQSceneController extends EventDispatcher{
     }
     //--- END GAMEPLAY EVENT HANDLERS
 
-    private function mainLoop(e:EnterFrameEvent):void {
-        _fieldController.draw();
-
+    private function mainLoop(e:Event):void {
         // normaly we should use e.passedTime,
         // but it`s single player so matter only if FPS is dramatically low
         _fieldController.doStep(SIMULATION_STEP, _fieldDebugView);
+        _fieldController.draw();
     }
 
     private function restartRace():void{
@@ -167,12 +164,12 @@ public class SQSceneController extends EventDispatcher{
 
     private function startSimulation():void{
         _restartButton.addEventListener(MouseEvent.CLICK, onRefreshButtonClick);
-        StarlingScene.instance.addEventListener(EnterFrameEvent.ENTER_FRAME, mainLoop);
+        EventHeap.instance.register(Event.ENTER_FRAME, mainLoop);
     }
 
     private function stopSimulation():void{
         _restartButton.removeEventListener(MouseEvent.CLICK, onRefreshButtonClick);
-        StarlingScene.instance.removeEventListener(EnterFrameEvent.ENTER_FRAME, mainLoop);
+        EventHeap.instance.unregister(Event.ENTER_FRAME, mainLoop);
     }
 
     private function clear():void{

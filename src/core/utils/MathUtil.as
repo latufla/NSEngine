@@ -8,7 +8,7 @@
 package core.utils {
 import flash.geom.Point;
 
-import nape.geom.Vec2;
+//import nape.geom.Vec2;
 
 public class MathUtil {
 //    public static function angleFromVector(v:Point):Number{
