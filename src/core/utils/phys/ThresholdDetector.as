@@ -11,12 +11,12 @@ import flash.display.BitmapData;
 import nape.geom.AABB;
 import nape.geom.IsoFunction;
 
-public class NapeBitmapDataIso implements IsoFunction {
+public class ThresholdDetector implements IsoFunction {
     public var bitmap:BitmapData;
     public var alphaThreshold:Number;
     public var bounds:AABB;
 
-    public function NapeBitmapDataIso(bitmap:BitmapData, alphaThreshold:Number = 0x80):void {
+    public function ThresholdDetector(bitmap:BitmapData, alphaThreshold:Number = 0x80):void {
         this.bitmap = bitmap;
         this.alphaThreshold = alphaThreshold;
         bounds = new AABB(0, 0, bitmap.width, bitmap.height);

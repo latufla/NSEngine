@@ -6,16 +6,16 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.model {
-
 import core.controller.ControllerBase;
 import core.utils.assets.AssetsLib;
 import core.utils.phys.CustomMaterial;
 import core.utils.phys.CustomPolygon;
 import core.utils.phys.CustomShape;
+import core.utils.phys.NapeUtil;
 import core.utils.phys.PhysEngineConnector;
 
 import flash.display.Bitmap;
-
+import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
@@ -29,7 +29,7 @@ public class ObjectBase {
     protected var _shapes:Vector.<CustomShape>;
     protected var _material:CustomMaterial;
 
-    protected var _interactionGroup:int = 1;
+    protected var _interactionGroup:uint = 1;
 
     public function ObjectBase() {
         init();
@@ -42,7 +42,7 @@ public class ObjectBase {
         PhysEngineConnector.instance.setPosition(this, DEFAULT_POSITION);
     }
 
-    public static function create(pos:Point, shapes:Vector.<CustomShape>, material:CustomMaterial, interactionGroup:int):ObjectBase{
+    public static function create(pos:Point, shapes:Vector.<CustomShape>, material:CustomMaterial, interactionGroup:uint):ObjectBase{
         var obj:ObjectBase = new ObjectBase();
         obj.shapes = shapes;
         obj.material = material;
@@ -50,7 +50,14 @@ public class ObjectBase {
         obj.interactionGroup = interactionGroup;
 
         return obj;
-     }
+    }
+
+    // TODO: make it secure
+    public static function fromBitmapData(pos:Point, polyBD:BitmapData, material:CustomMaterial, interactionGroup:uint):ObjectBase{
+        var vertexes:Vector.<Point> = NapeUtil.vertexesFromBD(polyBD);
+        var obj:ObjectBase = ObjectBase.create(pos, new <CustomShape>[new CustomPolygon(vertexes)], material, interactionGroup);
+        return obj;
+    }
 
     public function applyImpulse(imp:Point):void{
         PhysEngineConnector.instance.applyImpulse(this, imp);
@@ -133,11 +140,11 @@ public class ObjectBase {
         return PhysEngineConnector.instance.getBounds(this);
     }
 
-    public function get interactionGroup():int {
+    public function get interactionGroup():uint {
         return _interactionGroup;
     }
 
-    public function set interactionGroup(value:int):void {
+    public function set interactionGroup(value:uint):void {
         _interactionGroup = value;
     }
 
@@ -209,5 +216,8 @@ public class ObjectBase {
         return AssetsLib.instance.getAssetBy(_libDesc);
     }
 
+    public function splitByLine(a:Point, b:Point):Vector.<ObjectBase>{
+        return null;
+    }
 }
 }
