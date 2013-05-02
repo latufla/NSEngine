@@ -71,5 +71,13 @@ public class CustomPolygon extends CustomShape{
     public function toString():String{
         return _vertexes.toString();
     }
+
+    public function splitByLine(a:Point, b:Point):Vector.<CustomPolygon>{
+        return NapeUtil.splitByLine(this, a, b);
+    }
+
+    public function get bounds():Rectangle{
+        return NapeUtil.getBounds(this);
+    }
 }
 }

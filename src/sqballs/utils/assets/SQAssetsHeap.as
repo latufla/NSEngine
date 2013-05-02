@@ -50,6 +50,11 @@ public class SQAssetsHeap extends AssetsHeap{
     [Embed(source="../../../../assets/ratMoveDesc.xml", mimeType="application/octet-stream")]
     private const RatMoveXMLClass:Class;
 
+
+    public static const APPLE:String = "apple";
+    [Embed(source="../../../../assets/fruits/apple.png")]
+    private const AppleViewClass:Class;
+
     public function SQAssetsHeap() {
         super();
     }
@@ -70,6 +75,9 @@ public class SQAssetsHeap extends AssetsHeap{
 
         _assets[RAT_MOVE] = RatMoveViewClass;
         _assetsDesc[RAT_MOVE] = RatMoveXMLClass;
+
+
+        _assets[APPLE] = AppleViewClass;
     }
 }
 }

@@ -221,13 +221,14 @@ public class ObjectBase {
         if(!(_shapes && _shapes[0] && _shapes[0] is CustomPolygon && _shapes.length == 1))
             return _objects;
 
-        var ps:Vector.<CustomPolygon> = NapeUtil.splitByLine(_shapes[0] as CustomPolygon, a, b);
+        var p1:CustomPolygon = _shapes[0] as CustomPolygon;
+        var ps:Vector.<CustomPolygon> = p1.splitByLine(a, b);
 
         if(!(ps && ps[0]))
             return _objects;
 
         var pos:Point = position;
-        var p1:CustomPolygon = shapes[0] as CustomPolygon;
+        p1 = _shapes[0] as CustomPolygon;
         var p2:CustomPolygon = ps.shift();
         p1.vertexes = p2.vertexes;
         position = pos;

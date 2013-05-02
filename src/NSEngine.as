@@ -4,10 +4,10 @@ import core.controller.ControllerBase;
 import core.controller.FieldController;
 import core.model.Field;
 import core.model.ObjectBase;
+import core.utils.DisplayObjectUtil;
 import core.utils.assets.AssetsLib;
 import core.utils.graphic.GraphicsEngineConnector;
 import core.utils.phys.CustomMaterial;
-import core.view.FieldView;
 
 import flash.display.Bitmap;
 import flash.display.Sprite;
@@ -68,6 +68,12 @@ public class NSEngine extends Sprite {
         addChild(_view.display);
 
         stage.addEventListener(MouseEvent.CLICK, onClick);
+
+        var view:Bitmap = AssetsLib.instance.getAssetBy(SQAssetsHeap.APPLE);
+
+        var splitedViews:Vector.<Bitmap> = DisplayObjectUtil.splitBitmapByLine(view, new Point(0, 60), new Point(50, 99));
+        addChild(splitedViews[0]);
+        addChild(splitedViews[1]);
     }
 
     var i:int = 0;

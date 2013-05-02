@@ -9,6 +9,7 @@ package core.utils.phys {
 
 import flash.display.BitmapData;
 import flash.geom.Point;
+import flash.geom.Rectangle;
 
 import nape.geom.AABB;
 import nape.geom.GeomPoly;
@@ -23,6 +24,13 @@ import nape.shape.Polygon;
 
 public class NapeUtil {
     public function NapeUtil() {
+    }
+
+
+    public static function getBounds(cP:CustomPolygon):Rectangle{
+        var p:Polygon = cP.toPhysEngineObj() as Polygon;
+        var gP:GeomPoly = GeomPoly.get(p.localVerts);
+        return gP.bounds().toRect();
     }
 
     public static function splitByLine(cP:CustomPolygon, p1:Point, p2:Point):Vector.<CustomPolygon>{

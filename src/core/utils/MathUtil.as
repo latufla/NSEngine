@@ -41,5 +41,13 @@ public class MathUtil {
     public static function randomize(a:*, b:*) : int {
         return ( Math.random() > .5 ) ? 1 : -1;
     }
+
+    public static function radToDeg(rad:Number):Number{
+        return rad * 180 / Math.PI;
+    }
+
+    public static function abs(value:Number):Number{
+        return value < 0 ? -value : value;
+    }
 }
 }
