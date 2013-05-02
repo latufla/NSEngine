@@ -10,6 +10,7 @@ import flash.geom.Point;
 import flash.geom.Rectangle;
 
 import nape.geom.Vec2;
+import nape.geom.Vec2Iterator;
 
 import nape.geom.Vec2List;
 
@@ -34,13 +35,14 @@ public class CustomPolygon extends CustomShape{
     override protected function updatePhysEngineObj(s:Shape):void{
         var vs:Vec2List = vertexesAsVec2List;
 
-        while(!(s as Polygon).localVerts.empty()){
-            (s as Polygon).localVerts.pop();
+        var p:Polygon = s as Polygon;
+        p.localVerts.clear();
+
+        var it:Vec2Iterator = vs.iterator();
+        while(it.hasNext()){
+            p.localVerts.push(it.next());
         }
 
-        while(!vs.empty()){
-            (s as Polygon).localVerts.push(vs.shift());
-        }
         super.updatePhysEngineObj(s);
     }
 
@@ -64,6 +66,10 @@ public class CustomPolygon extends CustomShape{
             vs.push(new Vec2(_vertexes[i].x, _vertexes[i].y));
         }
         return vs;
+    }
+
+    public function toString():String{
+        return _vertexes.toString();
     }
 }
 }

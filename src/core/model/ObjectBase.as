@@ -217,7 +217,29 @@ public class ObjectBase {
     }
 
     public function splitByLine(a:Point, b:Point):Vector.<ObjectBase>{
-        return null;
+        var _objects:Vector.<ObjectBase> = new <ObjectBase>[this];
+        if(!(_shapes && _shapes[0] && _shapes[0] is CustomPolygon && _shapes.length == 1))
+            return _objects;
+
+        var ps:Vector.<CustomPolygon> = NapeUtil.splitByLine(_shapes[0] as CustomPolygon, a, b);
+
+        if(!(ps && ps[0]))
+            return _objects;
+
+        var pos:Point = position;
+        var p1:CustomPolygon = shapes[0] as CustomPolygon;
+        var p2:CustomPolygon = ps.shift();
+        p1.vertexes = p2.vertexes;
+        position = pos;
+
+        var obj:ObjectBase;
+        var n:uint = ps.length;
+        for (var i:int = 0; i < n; i++) {
+            obj = ObjectBase.create(pos, new <CustomShape>[ps[i]], _material.clone(), _interactionGroup);
+            _objects.push(obj);
+        }
+
+        return _objects;
     }
 }
 }

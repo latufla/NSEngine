@@ -14,6 +14,7 @@ import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
+import flash.events.MouseEvent;
 import flash.geom.Point;
 
 import nape.util.BitmapDebug;
@@ -43,6 +44,9 @@ public class NSEngine extends Sprite {
         GraphicsEngineConnector.instance.start(onStarted);
     }
 
+    private var _fieldC:FieldController;
+    private var _fruit:ObjectBase;
+    private var _view:BitmapDebug;
     private function onStarted(e:*):void {
 //        new SQEngine();
 
@@ -51,18 +55,34 @@ public class NSEngine extends Sprite {
         var asset:Bitmap = AssetsLib.instance.getAssetBy(SQAssetsHeap.LEVEL_BORDERS_1);
         var field:Field = new Field(asset.bitmapData);
         field.libDesc = SQAssetsHeap.LEVEL_1;
-        var fieldController:FieldController = FieldController.create(field);
+        _fieldC = FieldController.create(field);
 
-        var fruit:ObjectBase = ObjectBase.fromBitmapData(new Point(150, 150), Bitmap(new AppleViewClass()).bitmapData, new CustomMaterial(), 1);
-        var fruitC:ControllerBase = ControllerBase.create(fruit);
-        fieldController.add(fruitC);
+        _fruit = ObjectBase.fromBitmapData(new Point(150, 150), Bitmap(new AppleViewClass()).bitmapData, new CustomMaterial(), 1);
+        var fruitC:ControllerBase = ControllerBase.create(_fruit);
+        _fieldC.add(fruitC);
 
-        fieldController.draw();
+        _view = new BitmapDebug(1024, 768);
+        _fieldC.doStep(1/ 60, _view);
+        _fieldC.draw();
+        _view.display.alpha = 0.5;
+        addChild(_view.display);
 
-        var view:BitmapDebug = new BitmapDebug(1024, 768);
-        fieldController.doStep(1/ 60, view);
-        view.display.alpha = 0.5;
-        addChild(view.display);
+        stage.addEventListener(MouseEvent.CLICK, onClick);
+    }
+
+    var i:int = 0;
+    private function onClick(e:MouseEvent):void {
+        var objects:Vector.<ObjectBase> = _fruit.splitByLine(new Point(0, 0), new Point(250, 250));
+
+        objects.shift();
+        if(objects.length == 0)
+            return;
+
+        var sC:ControllerBase = ControllerBase.create(objects[0]);
+       _fieldC.add(sC);
+
+        _fieldC.doStep(1/ 60, _view);
+        _fieldC.draw();
     }
 }
 }

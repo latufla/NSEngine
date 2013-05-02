@@ -12,6 +12,7 @@ import flash.geom.Point;
 
 import nape.geom.AABB;
 import nape.geom.GeomPoly;
+import nape.geom.GeomPolyIterator;
 import nape.geom.GeomPolyList;
 import nape.geom.IsoFunction;
 import nape.geom.MarchingSquares;
@@ -24,9 +25,28 @@ public class NapeUtil {
     public function NapeUtil() {
     }
 
+    public static function splitByLine(cP:CustomPolygon, p1:Point, p2:Point):Vector.<CustomPolygon>{
+        var res:Vector.<CustomPolygon> = new Vector.<CustomPolygon>();
+        var p:Polygon = cP.toPhysEngineObj() as Polygon;
+        var gP:GeomPoly = GeomPoly.get(p.localVerts);
+        var gPList:GeomPolyList = gP.cut(Vec2.fromPoint(p1), Vec2.fromPoint(p2)); // TODO: sick performance
+        gP.dispose();
+        var vertexes:Vector.<Point>;
+        var it:GeomPolyIterator = gPList.iterator();
+        while(it.hasNext()){
+            var tmpP:Polygon = new Polygon(it.next());
+            vertexes = vecPointFromVec2List(tmpP.localVerts);
+            res.push(new CustomPolygon(vertexes));
+        }
+        return res;
+    }
+
     public static function vertexesFromBD(bd:BitmapData):Vector.<Point>{
         var p:Polygon = convexPolygonFromBD(bd);
-        var vs:Vec2List = p.localVerts;
+        return vecPointFromVec2List(p.localVerts);
+    }
+
+    private static function vecPointFromVec2List(vs:Vec2List):Vector.<Point>{
         var vertexes:Vector.<Point> = new Vector.<Point>();
         var n:uint = vs.length;
         for (var i:int = 0; i < n; i++) {
@@ -72,18 +92,5 @@ public class NapeUtil {
         body.translateShapes(pivot);
         return body;
     }
-
-
-//    // use marching squares to create fruits polys from bitmaps
-//    // with cellsize of whole fruit image
-//    MarchingSquares.run();
-//
-//    // get shape from ObjectBase, create geom poly
-//    var shape:Polygon = new Polygon(Polygon.box(10, 10));
-//    var gPoly:GeomPoly = GeomPoly.get(shape.localVerts);
-//    // cut it and create 2 ObjectBase
-//    gPoly.cut()
-//
-//    var p:Polygon = new Polygon(Polygon.regular()); // transform circle to poly
 }
 }
