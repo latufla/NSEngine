@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.view {
+import core.utils.DisplayObjectUtil;
 import core.utils.graphic.GraphicsEngineConnector;
 
 import flash.display.Bitmap;
@@ -162,6 +163,24 @@ public class ViewBase {
 
     public function set name(value:String):void {
         _name = value;
+    }
+
+    public function splitByLine(a:Point, b:Point):Vector.<ViewBase>{
+        var views:Vector.<ViewBase> = new <ViewBase>[this];
+        var textures:Vector.<Bitmap> = DisplayObjectUtil.splitBitmapByLine(_texture, a, b);
+        var texture:Bitmap = textures.shift();
+        if (!texture)
+            return views;
+
+        DisplayObjectUtil.removeAll(this);
+        GraphicsEngineConnector.instance.initView(this, texture);
+
+        var n:uint = views.length;
+        for (var i:int = 0; i < n; i++) {
+            views.push(new ViewBase(textures[i]));
+        }
+
+        return views;
     }
 }
 }

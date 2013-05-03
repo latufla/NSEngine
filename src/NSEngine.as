@@ -8,6 +8,7 @@ import core.utils.DisplayObjectUtil;
 import core.utils.assets.AssetsLib;
 import core.utils.graphic.GraphicsEngineConnector;
 import core.utils.phys.CustomMaterial;
+import core.view.ViewBase;
 
 import flash.display.Bitmap;
 import flash.display.Sprite;
@@ -70,10 +71,12 @@ public class NSEngine extends Sprite {
         stage.addEventListener(MouseEvent.CLICK, onClick);
 
         var view:Bitmap = AssetsLib.instance.getAssetBy(SQAssetsHeap.APPLE);
+        var appleView:ViewBase = new ViewBase(view);
 
-        var splitedViews:Vector.<Bitmap> = DisplayObjectUtil.splitBitmapByLine(view, new Point(0, 60), new Point(50, 99));
-        addChild(splitedViews[0]);
-        addChild(splitedViews[1]);
+
+        var slicesApple:Vector.<ViewBase> = appleView.splitByLine(new Point(0, 30), new Point(70, 99));
+        _fieldC.view.addChild(slicesApple[0]);
+        _fieldC.view.addChild(slicesApple[1]);
     }
 
     var i:int = 0;
