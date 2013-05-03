@@ -18,6 +18,8 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Point;
 
+import fslicener.utils.assets.FSAssetsHeap;
+
 import nape.util.BitmapDebug;
 
 import sqballs.SQEngine;
@@ -51,9 +53,9 @@ public class NSEngine extends Sprite {
     private function onStarted(e:*):void {
 //        new SQEngine();
 
-        AssetsLib.instance.init(new SQAssetsHeap());
+        AssetsLib.instance.init(new FSAssetsHeap());
 
-        var asset:Bitmap = AssetsLib.instance.getAssetBy(SQAssetsHeap.LEVEL_BORDERS_1);
+        var asset:Bitmap = AssetsLib.instance.getAssetBy(FSAssetsHeap.LEVEL_BORDERS_1);
         var field:Field = new Field(asset.bitmapData);
         field.libDesc = SQAssetsHeap.LEVEL_1;
         _fieldC = FieldController.create(field);
@@ -70,7 +72,7 @@ public class NSEngine extends Sprite {
 
         stage.addEventListener(MouseEvent.CLICK, onClick);
 
-        var view:Bitmap = AssetsLib.instance.getAssetBy(SQAssetsHeap.APPLE);
+        var view:Bitmap = AssetsLib.instance.getAssetBy(FSAssetsHeap.APPLE);
         var appleView:ViewBase = new ViewBase(view);
 
 
