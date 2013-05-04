@@ -6,6 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 package core.utils.phys {
+import flash.geom.Point;
+
 import nape.shape.Shape;
 
 public class CustomShape {
@@ -29,6 +31,10 @@ public class CustomShape {
 
     public function clone():CustomShape{
         return null;
+    }
+
+    public function get localCOM():Point{
+        return _shape.localCOM.toPoint();
     }
 }
 }
