@@ -47,6 +47,10 @@ public class ControllerBase {
         CollectionUtils.removeElement(b, _behaviors);
     }
 
+    public function addBehaviorsPack(p:Vector.<BehaviorBase>):void{
+        _behaviors = _behaviors.concat(p);
+    }
+
     public function startBehaviors():void{
         for each(var p:BehaviorBase in _behaviors){
             p.start(this);

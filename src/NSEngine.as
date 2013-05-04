@@ -1,10 +1,10 @@
 package {
 
+import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
 import core.controller.FieldController;
 import core.model.Field;
 import core.model.ObjectBase;
-import core.utils.DisplayObjectUtil;
 import core.utils.assets.AssetsLib;
 import core.utils.graphic.GraphicsEngineConnector;
 import core.utils.phys.CustomMaterial;
@@ -18,15 +18,15 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.geom.Point;
 
+import fslicener.behaviors.control.user.UserControlBehavior;
+
+import fslicener.behaviors.gamepad.GamepadBehavior;
+import fslicener.behaviors.gameplay.SliceResolveBehavior;
+
+import fslicener.utils.Config;
 import fslicener.utils.assets.FSAssetsHeap;
 
 import nape.util.BitmapDebug;
-
-import sqballs.SQEngine;
-import sqballs.utils.Config;
-import sqballs.utils.LevelsLib;
-import sqballs.utils.assets.SQAssetsHeap;
-
 
 [SWF(width="1024", height="768", backgroundColor="#000000", frameRate="60")]
 public class NSEngine extends Sprite {
@@ -57,8 +57,10 @@ public class NSEngine extends Sprite {
 
         var asset:Bitmap = AssetsLib.instance.getAssetBy(FSAssetsHeap.LEVEL_BORDERS_1);
         var field:Field = new Field(asset.bitmapData);
-        field.libDesc = SQAssetsHeap.LEVEL_1;
+        field.libDesc = FSAssetsHeap.LEVEL_1;
         _fieldC = FieldController.create(field);
+        _fieldC.addBehaviorsPack(new <BehaviorBase>[new UserControlBehavior(), new SliceResolveBehavior()]);
+        _fieldC.startBehaviors();
 
         _fruit = ObjectBase.fromBitmapData(new Point(150, 150), Bitmap(new AppleViewClass()).bitmapData, new CustomMaterial(), 1);
         var fruitC:ControllerBase = ControllerBase.create(_fruit);
