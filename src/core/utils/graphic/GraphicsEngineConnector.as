@@ -221,6 +221,11 @@ public class GraphicsEngineConnector {
         return v.scaleY;
     }
 
+    public function globalToLocal(view:ViewBase, p:Point):Point{
+        var v:DisplayObject = _views[view];
+        return v.globalToLocal(p);
+    }
+
     // DISPLAY LIST
     public function getBounds(view:ViewBase):Rectangle{
         var v:DisplayObject = _views[view];

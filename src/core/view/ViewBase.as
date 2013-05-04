@@ -165,6 +165,10 @@ public class ViewBase {
         _name = value;
     }
 
+    public function globalToLocal(p:Point):Point{
+        return GraphicsEngineConnector.instance.globalToLocal(this, p);
+    }
+
     public function splitByLine(a:Point, b:Point):Vector.<ViewBase>{
         var views:Vector.<ViewBase> = new <ViewBase>[this];
         var textures:Vector.<Bitmap> = DisplayObjectUtil.splitBitmapByLine(_texture, a, b);
@@ -173,9 +177,10 @@ public class ViewBase {
             return views;
 
         DisplayObjectUtil.removeAll(this);
-        GraphicsEngineConnector.instance.initView(this, texture);
+        _texture = texture;
+        GraphicsEngineConnector.instance.initView(this, _texture);
 
-        var n:uint = views.length;
+        var n:uint = textures.length;
         for (var i:int = 0; i < n; i++) {
             views.push(new ViewBase(textures[i]));
         }

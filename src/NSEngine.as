@@ -20,8 +20,9 @@ import flash.geom.Point;
 
 import fslicener.behaviors.control.user.UserControlBehavior;
 
-import fslicener.behaviors.gamepad.GamepadBehavior;
 import fslicener.behaviors.gameplay.SliceResolveBehavior;
+import fslicener.controller.FSControllerBase;
+import fslicener.model.FSObjectBase;
 
 import fslicener.utils.Config;
 import fslicener.utils.assets.FSAssetsHeap;
@@ -48,7 +49,8 @@ public class NSEngine extends Sprite {
     }
 
     private var _fieldC:FieldController;
-    private var _fruit:ObjectBase;
+    private var _fruit:FSObjectBase;
+    private var _fruitC:FSControllerBase;
     private var _view:BitmapDebug;
     private function onStarted(e:*):void {
 //        new SQEngine();
@@ -62,9 +64,11 @@ public class NSEngine extends Sprite {
         _fieldC.addBehaviorsPack(new <BehaviorBase>[new UserControlBehavior(), new SliceResolveBehavior()]);
         _fieldC.startBehaviors();
 
-        _fruit = ObjectBase.fromBitmapData(new Point(150, 150), Bitmap(new AppleViewClass()).bitmapData, new CustomMaterial(), 1);
-        var fruitC:ControllerBase = ControllerBase.create(_fruit);
-        _fieldC.add(fruitC);
+        _fruit = FSObjectBase.fromBitmapData(new Point(150, 150), Bitmap(new AppleViewClass()).bitmapData, new CustomMaterial(), 1);
+        _fruit.libDesc = FSAssetsHeap.APPLE;
+        _fruitC = FSControllerBase.create(_fruit);
+        _fieldC.add(_fruitC);
+
 
         _view = new BitmapDebug(1024, 768);
         _fieldC.doStep(1/ 60, _view);
@@ -77,7 +81,6 @@ public class NSEngine extends Sprite {
         var view:Bitmap = AssetsLib.instance.getAssetBy(FSAssetsHeap.APPLE);
         var appleView:ViewBase = new ViewBase(view);
 
-
         var slicesApple:Vector.<ViewBase> = appleView.splitByLine(new Point(0, 30), new Point(70, 99));
         _fieldC.view.addChild(slicesApple[0]);
         _fieldC.view.addChild(slicesApple[1]);
@@ -85,14 +88,10 @@ public class NSEngine extends Sprite {
 
     var i:int = 0;
     private function onClick(e:MouseEvent):void {
-        var objects:Vector.<ObjectBase> = _fruit.splitByLine(new Point(0, 0), new Point(250, 250));
+        var fruitCs:Vector.<FSControllerBase> = _fruitC.slice(new Point(0, 0), new Point(250, 250));
 
-        objects.shift();
-        if(objects.length == 0)
-            return;
-
-        var sC:ControllerBase = ControllerBase.create(objects[0]);
-       _fieldC.add(sC);
+        if(fruitCs.length > 1)
+            _fieldC.add(fruitCs[1]);
 
         _fieldC.doStep(1/ 60, _view);
         _fieldC.draw();

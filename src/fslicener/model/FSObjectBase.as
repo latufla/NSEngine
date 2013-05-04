@@ -24,9 +24,19 @@ public class FSObjectBase extends ObjectBase {
         super();
     }
 
-    public static function fromBitmapData(pos:Point, polyBD:BitmapData, material:CustomMaterial, interactionGroup:uint):ObjectBase{
+    public static function create(pos:Point, shapes:Vector.<CustomShape>, material:CustomMaterial, interactionGroup:uint):FSObjectBase{
+        var obj:FSObjectBase = new FSObjectBase();
+        obj.shapes = shapes;
+        obj.material = material;
+        obj.position = pos;
+        obj.interactionGroup = interactionGroup;
+
+        return obj;
+    }
+
+    public static function fromBitmapData(pos:Point, polyBD:BitmapData, material:CustomMaterial, interactionGroup:uint):FSObjectBase{
         var vertexes:Vector.<Point> = NapeUtil.vertexesFromBD(polyBD);
-        var obj:ObjectBase = ObjectBase.create(pos, new <CustomShape>[new CustomPolygon(vertexes)], material, interactionGroup);
+        var obj:FSObjectBase = FSObjectBase.create(pos, new <CustomShape>[new CustomPolygon(vertexes)], material, interactionGroup);
         return obj;
     }
 
