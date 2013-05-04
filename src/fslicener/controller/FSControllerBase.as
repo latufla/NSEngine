@@ -30,12 +30,21 @@ public class FSControllerBase extends ControllerBase{
         return c;
     }
 
+    override protected function align():void{
+        super.align();
+
+        var obj:FSObjectBase = _object as FSObjectBase;
+        _view.pivotX = obj.pivotX;
+        _view.pivotY =  obj.pivotY;
+    }
+
     public function slice(a:Point, b:Point):Vector.<FSControllerBase>{
         var res:Vector.<FSControllerBase> = new <FSControllerBase>[this];
         if(!(_object && _view))
             return res;
 
-        var objects:Vector.<ObjectBase> = (_object as FSObjectBase).splitByLine(a, b);
+        var obj:FSObjectBase = _object as FSObjectBase;
+        var objects:Vector.<FSObjectBase> = obj.splitByLine(a, b);
         objects.shift();
 
         var views:Vector.<ViewBase> = _view.splitByLine(_view.globalToLocal(a), _view.globalToLocal(b));
@@ -44,7 +53,6 @@ public class FSControllerBase extends ControllerBase{
         var n:uint = objects.length;
         for (var i:int = 0; i < n; i++) {
             var c:FSControllerBase = FSControllerBase.create(objects[i]);
-            c.draw();
             c.view = views[i];
             res.push(c);
         }

@@ -76,13 +76,14 @@ public class DisplayObjectUtil {
     private static var _container:Sprite = new Sprite();
     private static var _mask:Sprite = new Sprite();
     private static function refreshSplitedView(path:Array, masked:Bitmap):Sprite {
+        DisplayObjectUtil.removeAll(_container);
+
         with(_mask.graphics){
             clear();
             beginFill(0xFF0000);
             drawPath(path[0], path[1]);
             endFill();
         }
-
         _view.addChild(_container);
         _view.addChild(_mask);
         _container.mask = _mask;

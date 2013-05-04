@@ -86,12 +86,14 @@ public class NSEngine extends Sprite {
         _fieldC.view.addChild(slicesApple[1]);
     }
 
-    var i:int = 0;
+    private var _prevC:FSControllerBase
     private function onClick(e:MouseEvent):void {
         var fruitCs:Vector.<FSControllerBase> = _fruitC.slice(new Point(0, 0), new Point(250, 250));
-
-        if(fruitCs.length > 1)
-            _fieldC.add(fruitCs[1]);
+        if(fruitCs.length > 1){
+            _prevC && _fieldC.remove(_prevC);
+            _prevC = fruitCs[1];
+            _fieldC.add(_prevC);
+        }
 
         _fieldC.doStep(1/ 60, _view);
         _fieldC.draw();
