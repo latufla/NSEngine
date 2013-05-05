@@ -36,6 +36,8 @@ public class FSControllerBase extends ControllerBase{
         var obj:FSObjectBase = _object as FSObjectBase;
         _view.pivotX = obj.pivotX;
         _view.pivotY =  obj.pivotY;
+
+        _view.rotation = _object.rotation;
     }
 
     public function slice(a:Point, b:Point):Vector.<FSControllerBase>{
@@ -44,8 +46,11 @@ public class FSControllerBase extends ControllerBase{
             return res;
 
         var obj:FSObjectBase = _object as FSObjectBase;
-        var objects:Vector.<FSObjectBase> = obj.splitByLine(a, b);
+        var objects:Vector.<FSObjectBase> = obj.splitByLine(_view.globalToLocal(a), _view.globalToLocal(b));
         objects.shift();
+
+        if(objects.length == 0)
+            return res;
 
         var views:Vector.<ViewBase> = _view.splitByLine(_view.globalToLocal(a), _view.globalToLocal(b));
         views.shift();

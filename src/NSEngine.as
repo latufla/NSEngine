@@ -1,10 +1,8 @@
 package {
 
 import core.behaviors.BehaviorBase;
-import core.controller.ControllerBase;
 import core.controller.FieldController;
 import core.model.Field;
-import core.model.ObjectBase;
 import core.utils.assets.AssetsLib;
 import core.utils.graphic.GraphicsEngineConnector;
 import core.utils.phys.CustomMaterial;
@@ -64,8 +62,9 @@ public class NSEngine extends Sprite {
         _fieldC.addBehaviorsPack(new <BehaviorBase>[new UserControlBehavior(), new SliceResolveBehavior()]);
         _fieldC.startBehaviors();
 
-        _fruit = FSObjectBase.fromBitmapData(new Point(150, 150), Bitmap(new AppleViewClass()).bitmapData, new CustomMaterial(), 1);
+        _fruit = FSObjectBase.fromBitmapData(new Point(150, 130), Bitmap(new AppleViewClass()).bitmapData, new CustomMaterial(), 1);
         _fruit.libDesc = FSAssetsHeap.APPLE;
+        _fruit.rotation = Math.PI / 4;
         _fruitC = FSControllerBase.create(_fruit);
         _fieldC.add(_fruitC);
 
@@ -76,7 +75,7 @@ public class NSEngine extends Sprite {
         _view.display.alpha = 0.5;
         addChild(_view.display);
 
-        stage.addEventListener(MouseEvent.CLICK, onClick);
+        stage.addEventListener(Event.ENTER_FRAME, onEF);
 
         var view:Bitmap = AssetsLib.instance.getAssetBy(FSAssetsHeap.APPLE);
         var appleView:ViewBase = new ViewBase(view);
@@ -84,17 +83,21 @@ public class NSEngine extends Sprite {
         var slicesApple:Vector.<ViewBase> = appleView.splitByLine(new Point(0, 30), new Point(70, 99));
         _fieldC.view.addChild(slicesApple[0]);
         _fieldC.view.addChild(slicesApple[1]);
+
+        var line:Sprite = new Sprite();
+        with(line.graphics){
+            beginFill(0xFF0000);
+            lineStyle(1, 0xFF0000);
+            moveTo(0, 0);
+            lineTo(250, 210);
+            moveTo(0, 250);
+            lineTo(250, 0);
+            endFill();
+        }
+        addChild(line);
     }
 
-    private var _prevC:FSControllerBase
-    private function onClick(e:MouseEvent):void {
-        var fruitCs:Vector.<FSControllerBase> = _fruitC.slice(new Point(0, 0), new Point(250, 250));
-        if(fruitCs.length > 1){
-            _prevC && _fieldC.remove(_prevC);
-            _prevC = fruitCs[1];
-            _fieldC.add(_prevC);
-        }
-
+    private function onEF(e:Event):void {
         _fieldC.doStep(1/ 60, _view);
         _fieldC.draw();
     }

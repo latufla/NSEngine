@@ -132,6 +132,10 @@ public class ObjectBase {
         return PhysEngineConnector.instance.localPointToGlobal(this, p);
     }
 
+    public function fieldToLocal(p:Point):Point{
+        return PhysEngineConnector.instance.globalPointToLocal(this, p);
+    }
+
     public function localVecToField(v:Point):Point{
         return PhysEngineConnector.instance.localVecToGlobal(this, v);
     }

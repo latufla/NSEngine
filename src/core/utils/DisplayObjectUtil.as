@@ -57,14 +57,14 @@ public class DisplayObjectUtil {
     }
 
     public static function splitBitmapByLine(bmp:Bitmap, a:Point, b:Point):Vector.<Bitmap>{
-        var boundPoly:CustomPolygon = new CustomPolygon(CustomPolygon.rect(bmp.getBounds(bmp)));
+        var bounds:Rectangle = bmp.getBounds(bmp);
+        var boundPoly:CustomPolygon = new CustomPolygon(CustomPolygon.rect(bounds));
         var ps:Vector.<CustomPolygon> = boundPoly.splitByLine(a, b);
          var res:Vector.<Bitmap> = new Vector.<Bitmap>();
         var n:uint = ps.length;
         for(var i:uint = 0; i < n; i++){
             var p:CustomPolygon = ps[i];
             var path:Array = createPath(p.vertexes);
-            var bounds:Rectangle = p.bounds;
             var bd:BitmapData = new BitmapData(bounds.width, bounds.height, true, 0xFFFFFF);
             bd.draw(refreshSplitedView(path, bmp), new Matrix(1, 0, 0, 1, -bounds.x, -bounds.y));
             res.push(new Bitmap(bd));

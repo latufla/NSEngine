@@ -36,5 +36,9 @@ public class CustomShape {
     public function get localCOM():Point{
         return _shape.localCOM.toPoint();
     }
+
+    public function get fieldCOM():Point{
+        return _shape.worldCOM.toPoint();
+    }
 }
 }

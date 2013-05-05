@@ -166,6 +166,12 @@ public class PhysEngineConnector {
         return physObj.localPointToWorld(napeV).toPoint();
     }
 
+    public function globalPointToLocal(obj:ObjectBase, gp:Point):Point{
+        var physObj:Body = _physObjects[obj];
+        var napeV:Vec2 = Vec2.fromPoint(gp);
+        return physObj.worldPointToLocal(napeV).toPoint();
+    }
+
     public function localVecToGlobal(obj:ObjectBase, v:Point):Point{
         var physObj:Body = _physObjects[obj];
         var napeV:Vec2 = Vec2.fromPoint(v);

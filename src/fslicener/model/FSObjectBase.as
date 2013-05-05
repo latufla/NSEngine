@@ -21,7 +21,7 @@ public class FSObjectBase extends ObjectBase {
     private var _pivotX:int = 43;
     private var _pivotY:int = 58;
 
-    private var _points:uint = 10;
+    private var _points:uint = 40;
 
     public function FSObjectBase() {
         super();
@@ -51,34 +51,46 @@ public class FSObjectBase extends ObjectBase {
         _points = value;
     }
 
+    // TODO: use world com as position for sliced objects
     public function splitByLine(a:Point, b:Point):Vector.<FSObjectBase>{
         var _objects:Vector.<FSObjectBase> = new <FSObjectBase>[this];
         if(!(_shapes && _shapes[0] && _shapes[0] is CustomPolygon && _shapes.length == 1))
             return _objects;
 
-        var p1:CustomPolygon = _shapes[0] as CustomPolygon;
-        var ps:Vector.<CustomPolygon> = p1.splitByLine(a, b);
-
-        if(!(ps && ps[0]))
+        var ps:Vector.<CustomPolygon> = (_shapes[0] as CustomPolygon).splitByLine(a, b);
+        if(!ps || ps.length < 2)
             return _objects;
 
         var pos:Point = position;
-        p1 = _shapes[0] as CustomPolygon;
-        var p2:CustomPolygon = ps.shift();
-        p1.vertexes = p2.vertexes;
-        position = pos;
-
-        var obj:FSObjectBase;
         var n:uint = ps.length;
         for (var i:int = 0; i < n; i++) {
-            obj = FSObjectBase.create(pos, new <CustomShape>[ps[i]], _material.clone(), _interactionGroup);
+            shapes[i] = ps[i];
+        }
+        shapes = shapes;
+        position = pos;
+
+        var thisPoly:CustomPolygon = ps.shift();
+        var com:Point = thisPoly.localCOM;
+        _pivotX = com.x;
+        _pivotY = com.y;
+        _points /= ps.length + 1;
+
+        var obj:FSObjectBase;
+        n = ps.length;
+        for (i = 0; i < n; i++) {
+            obj = FSObjectBase.create(ps[i].fieldCOM, new <CustomShape>[ps[i]], _material.clone(), _interactionGroup);
+            com = ps[i].localCOM;
+            obj.pivotX = com.x;
+            obj.pivotY = com.y;
+            obj.rotation = rotation;
+            obj.points = _points;
             _objects.push(obj);
         }
 
-        var n:uint = _objects.length;
-        for (var i:int = 0; i < n; i++) {
-            _objects[i].points = _points / n;
-        }
+        var pos:Point = thisPoly.fieldCOM;
+        shapes = new <CustomShape>[thisPoly];
+        position = pos;
+
         return _objects;
     }
 
