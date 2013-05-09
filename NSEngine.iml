@@ -8,7 +8,7 @@
             <entry library-id="fc8c7934-78c9-4027-ab81-acffad7a1dcc">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="b9a9a64d-f7a8-4795-9c20-8105cda1dacc">
+            <entry library-id="49b38d6c-0964-4dff-a7da-60c714cab9c9">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -41,9 +41,9 @@
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="b9a9a64d-f7a8-4795-9c20-8105cda1dacc" />
+        <properties id="49b38d6c-0964-4dff-a7da-60c714cab9c9" />
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/nape-release.swc!/" />
+          <root url="jar://$MODULE_DIR$/lib/nape-debug.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

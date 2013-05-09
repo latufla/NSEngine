@@ -77,13 +77,6 @@ public class NSEngine extends Sprite {
 
         stage.addEventListener(Event.ENTER_FRAME, onEF);
 
-        var view:Bitmap = AssetsLib.instance.getAssetBy(FSAssetsHeap.APPLE);
-        var appleView:ViewBase = new ViewBase(view);
-
-        var slicesApple:Vector.<ViewBase> = appleView.splitByLine(new Point(0, 30), new Point(70, 99));
-        _fieldC.view.addChild(slicesApple[0]);
-        _fieldC.view.addChild(slicesApple[1]);
-
         var line:Sprite = new Sprite();
         with(line.graphics){
             beginFill(0xFF0000);

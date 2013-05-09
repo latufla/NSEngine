@@ -26,7 +26,6 @@ public class NapeUtil {
     public function NapeUtil() {
     }
 
-
     public static function getBounds(cP:CustomPolygon):Rectangle{
         var p:Polygon = cP.toPhysEngineObj() as Polygon;
         var gP:GeomPoly = GeomPoly.get(p.localVerts);
@@ -42,11 +41,24 @@ public class NapeUtil {
         var vertexes:Vector.<Point>;
         var it:GeomPolyIterator = gPList.iterator();
         while(it.hasNext()){
-            var tmpP:Polygon = new Polygon(it.next());
+            gP = it.next();
+            if(!isValidGeomPoly(gP))
+                continue;
+
+            var tmpP:Polygon = new Polygon(gP);
             vertexes = vecPointFromVec2List(tmpP.localVerts);
             res.push(new CustomPolygon(vertexes));
         }
         return res;
+    }
+
+    private static function isValidGeomPoly(p:GeomPoly):Boolean {
+        if(p.isDegenerate() || !p.isConvex()){
+            trace(false, p);
+            return false;
+        }
+
+        return true;
     }
 
     public static function vertexesFromBD(bd:BitmapData):Vector.<Point>{
@@ -67,8 +79,10 @@ public class NapeUtil {
     private static function convexPolygonFromBD(bd:BitmapData):Polygon{
         var tDet:ThresholdDetector = new ThresholdDetector(bd, 0x80);
         var b:AABB = tDet.bounds;
-        var ps:GeomPolyList = MarchingSquares.run(tDet, b, Vec2.weak(8, 8));
-        return new Polygon(ps.at(0));
+        var ps:GeomPolyList = MarchingSquares.run(tDet, b, Vec2.weak(1, 1), 10);
+        var p:GeomPoly = ps.at(0).simplify(1.5);
+        trace(p.isConvex(), p);
+        return new Polygon(p);
     }
 
 
