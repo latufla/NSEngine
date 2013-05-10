@@ -34,21 +34,20 @@ public class GameProcessBehavior extends BehaviorBase{
         _levelInfo = LevelInfoLib.getLevelInfoById(_userInfo.level);
     }
 
-    private var _once:Boolean;
     override public function doStep(step:Number):void {
         if(!_enabled)
             return;
 
         _time +=step;
 
-        if(_once)
-            return;
-
         var wave:WaveInfo = _levelInfo.waves[0];
-        var objInfo:WaveObjectInfo = wave.objects[0];
-        if(_time > objInfo.timeout){
-            applyCreateObject(objInfo);
-            _once = true;
+        var objInfo:WaveObjectInfo;
+        for (var i:uint = 0; i < wave.objects.length; i++){
+            objInfo = wave.objects[i];
+            if(_time > objInfo.timeout){
+                applyCreateObject(objInfo);
+                wave.objects.splice(i, 1);
+            }
         }
     }
 

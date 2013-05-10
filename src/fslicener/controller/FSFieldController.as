@@ -9,15 +9,16 @@ package fslicener.controller {
 import core.behaviors.BehaviorBase;
 import core.controller.ControllerBase;
 import core.controller.FieldController;
-import core.model.Field;
 import core.utils.phys.PhysEngineConnector;
 
+import fslicener.model.FSField;
+
 public class FSFieldController extends FieldController {
-    public function FSFieldController(object:Field) {
+    public function FSFieldController(object:FSField) {
         super(object);
     }
 
-    public static function create(obj:Field, behaviors:Vector.<BehaviorBase> = null):FSFieldController{
+    public static function create(obj:FSField, behaviors:Vector.<BehaviorBase> = null):FSFieldController{
         var c:FSFieldController = new FSFieldController(obj);
         for each(var p:BehaviorBase in behaviors){
             c.addBehavior(p);
@@ -32,6 +33,16 @@ public class FSFieldController extends FieldController {
         }
 
         PhysEngineConnector.instance.doStep(this, step, debugView);
+    }
+
+    override protected function align():void{
+        super.align();
+
+        var f:FSField = _object as FSField;
+        _view.pivotX = f.pivotX;
+        _view.pivotY = f.pivotY;
+
+        _view.rotation = f.rotation;
     }
 }
 }

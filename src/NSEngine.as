@@ -22,11 +22,10 @@ import fslicener.behaviors.gameplay.GameProcessBehavior;
 import fslicener.behaviors.gameplay.SliceResolveBehavior;
 import fslicener.controller.FSControllerBase;
 import fslicener.controller.FSFieldController;
+import fslicener.model.FSField;
 import fslicener.model.FSObjectBase;
 import fslicener.model.info.LevelInfo;
 import fslicener.model.info.UserInfo;
-import fslicener.model.info.WaveInfo;
-import fslicener.model.info.WaveObjectInfo;
 
 import fslicener.utils.Config;
 import fslicener.utils.LevelInfoLib;
@@ -63,7 +62,7 @@ public class NSEngine extends Sprite {
         AssetsLib.instance.init(new FSAssetsHeap());
 
         var asset:Bitmap = AssetsLib.instance.getAssetBy(FSAssetsHeap.LEVEL_BORDERS_1);
-        var field:Field = new Field(asset.bitmapData);
+        var field:FSField = new FSField(asset.bitmapData);
         field.libDesc = FSAssetsHeap.LEVEL_1;
         _fieldC = FSFieldController.create(field);
         _fieldC.addBehaviorsPack(new <BehaviorBase>[new UserControlBehavior(), new SliceResolveBehavior(), new GameProcessBehavior(new UserInfo())]);
