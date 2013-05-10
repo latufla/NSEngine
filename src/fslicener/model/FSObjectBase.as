@@ -52,31 +52,27 @@ public class FSObjectBase extends ObjectBase {
     }
 
     // TODO: use world com as position for sliced objects
-    public function splitByLine(a:Point, b:Point):Vector.<FSObjectBase>{
-        var _objects:Vector.<FSObjectBase> = new <FSObjectBase>[this];
+    public function splitByLine(a:Point, b:Point, closedGaps:Boolean = false):Vector.<FSObjectBase>{
         if(!(_shapes && _shapes[0] && _shapes[0] is CustomPolygon && _shapes.length == 1))
-            return _objects;
+            return null;
 
-        var ps:Vector.<CustomPolygon> = (_shapes[0] as CustomPolygon).splitByLine(a, b);
+        var initialShape:CustomPolygon = (_shapes[0] as CustomPolygon);
+        var ps:Vector.<CustomPolygon> = initialShape.splitByLine(a, b, closedGaps);
         if(!ps || ps.length < 2)
-            return _objects;
+            return null;
+
 
         var pos:Point = position;
         var n:uint = ps.length;
         for (var i:int = 0; i < n; i++) {
-            shapes[i] = ps[i];
+            _shapes[i] = ps[i];
         }
-        shapes = shapes;
+        shapes = _shapes;
         position = pos;
 
-        var thisPoly:CustomPolygon = ps.shift();
-        var com:Point = thisPoly.localCOM;
-        _pivotX = com.x;
-        _pivotY = com.y;
-        _points /= ps.length + 1;
-
+        var objects:Vector.<FSObjectBase> = new <FSObjectBase>[];
+        var com:Point;
         var obj:FSObjectBase;
-        n = ps.length;
         for (i = 0; i < n; i++) {
             obj = FSObjectBase.create(ps[i].fieldCOM, new <CustomShape>[ps[i]], _material.clone(), _interactionGroup);
             com = ps[i].localCOM;
@@ -84,14 +80,13 @@ public class FSObjectBase extends ObjectBase {
             obj.pivotY = com.y;
             obj.rotation = rotation;
             obj.points = _points;
-            _objects.push(obj);
+            objects.push(obj);
         }
 
-        var pos:Point = thisPoly.fieldCOM;
-        shapes = new <CustomShape>[thisPoly];
+        shapes = new <CustomShape>[initialShape];
         position = pos;
 
-        return _objects;
+        return objects;
     }
 
     public function get pivotX():int{

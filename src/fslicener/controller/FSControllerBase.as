@@ -41,27 +41,28 @@ public class FSControllerBase extends ControllerBase{
     }
 
     public function slice(a:Point, b:Point):Vector.<FSControllerBase>{
-        var res:Vector.<FSControllerBase> = new <FSControllerBase>[this];
         if(!(_object && _view))
-            return res;
+            return null;
 
         var obj:FSObjectBase = _object as FSObjectBase;
-        var objects:Vector.<FSObjectBase> = obj.splitByLine(_view.globalToLocal(a), _view.globalToLocal(b));
-        objects.shift();
+        var locA:Point = _view.globalToLocal(a);
+        var locB:Point = _view.globalToLocal(b);
+        var objects:Vector.<FSObjectBase> = obj.splitByLine(locA, locB, true);
+        if(!objects)
+            return null;
 
-        if(objects.length == 0)
-            return res;
+        var views:Vector.<ViewBase> = _view.splitByLine(locA, locB);
+        if(!views)
+            return null;
 
-        var views:Vector.<ViewBase> = _view.splitByLine(_view.globalToLocal(a), _view.globalToLocal(b));
-        views.shift();
 
+        var res:Vector.<FSControllerBase> = new <FSControllerBase>[];
         var n:uint = objects.length;
         for (var i:int = 0; i < n; i++) {
             var c:FSControllerBase = FSControllerBase.create(objects[i]);
             c.view = views[i];
             res.push(c);
         }
-
         return res;
     }
 }

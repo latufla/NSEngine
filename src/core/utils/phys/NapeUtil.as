@@ -7,6 +7,8 @@
  */
 package core.utils.phys {
 
+import core.utils.MathUtil;
+
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
@@ -32,24 +34,52 @@ public class NapeUtil {
         return gP.bounds().toRect();
     }
 
-    public static function splitByLine(cP:CustomPolygon, p1:Point, p2:Point):Vector.<CustomPolygon>{
+    public static function splitByLine(cP:CustomPolygon, p1:Point, p2:Point, closedGaps:Boolean = false):Vector.<CustomPolygon>{
         var res:Vector.<CustomPolygon> = new Vector.<CustomPolygon>();
         var p:Polygon = cP.toPhysEngineObj() as Polygon;
         var gP:GeomPoly = GeomPoly.get(p.localVerts);
-        var gPList:GeomPolyList = gP.cut(Vec2.fromPoint(p1), Vec2.fromPoint(p2)); // TODO: sick performance
+        var gPList:GeomPolyList = gP.cut(Vec2.fromPoint(p1), Vec2.fromPoint(p2), closedGaps, closedGaps); // TODO: sick performance
         gP.dispose();
         var vertexes:Vector.<Point>;
         var it:GeomPolyIterator = gPList.iterator();
         while(it.hasNext()){
             gP = it.next();
-            if(!isValidGeomPoly(gP))
-                continue;
+            if(!isValidGeomPoly(gP)) //can`t split, cause one is invalid
+                return null;
 
             var tmpP:Polygon = new Polygon(gP);
             vertexes = vecPointFromVec2List(tmpP.localVerts);
             res.push(new CustomPolygon(vertexes));
         }
+
+        swapByHalfPlanes(res, p1, p2);  // determination
         return res;
+    }
+
+    private static function swapByHalfPlanes(res:Vector.<CustomPolygon>, p1:Point, p2:Point):void {
+        res.sort(sorter);
+
+        function sorter(a:CustomPolygon, b:CustomPolygon):int{
+            var aSign:int = halfPlaneSign(a, p1, p2);
+            var bSign:int = halfPlaneSign(b, p1, p2);
+            if(aSign > bSign)
+                return -1;
+            else if(aSign < bSign)
+                return 1;
+
+            return 0;
+        }
+    }
+
+    private static function halfPlaneSign(cP:CustomPolygon, p1:Point, p2:Point):int{
+        var sign:int;
+        for each(var p:Point in cP.vertexes){
+            var hPlaneK:int = (p2.x - p1.x) * (p.y - p1.y) - (p2.y - p1.y) * (p.x - p1.x);
+            sign = hPlaneK != 0 ? hPlaneK / MathUtil.abs(hPlaneK) : sign;
+            if(sign != 0)
+                break;
+        }
+        return sign;
     }
 
     private static function isValidGeomPoly(p:GeomPoly):Boolean {

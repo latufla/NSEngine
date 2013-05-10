@@ -56,11 +56,13 @@ public class DisplayObjectUtil {
         return (r << 16) | (g << 8) | b;
     }
 
-    public static function splitBitmapByLine(bmp:Bitmap, a:Point, b:Point):Vector.<Bitmap>{
+    public static function splitBitmapByLine(bmp:Bitmap, a:Point, b:Point, closedGaps:Boolean = false):Vector.<Bitmap>{
         var bounds:Rectangle = bmp.getBounds(bmp);
         var boundPoly:CustomPolygon = new CustomPolygon(CustomPolygon.rect(bounds));
-        var ps:Vector.<CustomPolygon> = boundPoly.splitByLine(a, b);
-         var res:Vector.<Bitmap> = new Vector.<Bitmap>();
+        var ps:Vector.<CustomPolygon> = boundPoly.splitByLine(a, b, closedGaps);
+        if(!ps)
+            return null;
+        var res:Vector.<Bitmap> = new Vector.<Bitmap>();
         var n:uint = ps.length;
         for(var i:uint = 0; i < n; i++){
             var p:CustomPolygon = ps[i];

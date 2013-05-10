@@ -169,23 +169,21 @@ public class ViewBase {
         return GraphicsEngineConnector.instance.globalToLocal(this, p);
     }
 
-    public function splitByLine(a:Point, b:Point):Vector.<ViewBase>{
-        var views:Vector.<ViewBase> = new <ViewBase>[this];
-        var textures:Vector.<Bitmap> = DisplayObjectUtil.splitBitmapByLine(_texture, a, b);
-        var texture:Bitmap = textures.shift();
-        if (!texture)
-            return views;
+    public function splitByLine(a:Point, b:Point, closedGaps:Boolean = false):Vector.<ViewBase>{
+        var textures:Vector.<Bitmap> = DisplayObjectUtil.splitBitmapByLine(_texture, a, b, closedGaps);
+        if(!textures || textures.length < 2)
+            return null;
 
-        DisplayObjectUtil.removeAll(this);
-        _texture = texture;
-        GraphicsEngineConnector.instance.initView(this, _texture);
-
+        var views:Vector.<ViewBase> = new <ViewBase>[];
         var n:uint = textures.length;
         for (var i:int = 0; i < n; i++) {
             views.push(new ViewBase(textures[i]));
         }
-
         return views;
+    }
+
+    public function get texture():Bitmap {
+        return _texture;
     }
 }
 }
