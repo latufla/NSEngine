@@ -21,6 +21,7 @@ import fslicener.behaviors.control.user.UserControlBehavior;
 import fslicener.behaviors.gameplay.SliceResolveBehavior;
 import fslicener.controller.FSControllerBase;
 import fslicener.model.FSObjectBase;
+import fslicener.model.info.WaveObjectInfo;
 
 import fslicener.utils.Config;
 import fslicener.utils.assets.FSAssetsHeap;
@@ -77,17 +78,10 @@ public class NSEngine extends Sprite {
 
         stage.addEventListener(Event.ENTER_FRAME, onEF);
 
-        var line:Sprite = new Sprite();
-        with(line.graphics){
-            beginFill(0xFF0000);
-            lineStyle(1, 0xFF0000);
-            moveTo(0, 0);
-            lineTo(250, 210);
-            moveTo(0, 250);
-            lineTo(250, 0);
-            endFill();
-        }
-        addChild(line);
+        var waveObjStr:String = '{"name": "apple", "position":"10:200", "impulse":"100", "angularImpulse":"20", "points":"20", "timeout": "5"}';
+        var params:Object = JSON.parse(waveObjStr);
+        var o:WaveObjectInfo = new WaveObjectInfo(params);
+        trace(o);
     }
 
     private function onEF(e:Event):void {
