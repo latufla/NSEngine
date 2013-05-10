@@ -15,7 +15,7 @@ import flash.geom.Point;
 
 import fslicener.behaviors.control.ControlBehavior;
 import fslicener.controller.FSControllerBase;
-import fslicener.utils.Config;
+import fslicener.controller.FSFieldController;
 
 public class SliceResolveBehavior extends BehaviorBase{
     public function SliceResolveBehavior() {
@@ -38,14 +38,13 @@ public class SliceResolveBehavior extends BehaviorBase{
     }
 
     private function applySlice(s:Vector.<Point>):void {
-        var fieldC:FieldController = _controller as FieldController;
-        if(!fieldC)
+        var fieldC:FSFieldController = _controller as FSFieldController;
+        if(!fieldC || s[0].equals(s[1]))
             return;
 
         var cs:Vector.<ControllerBase> = fieldC.getControllersByClass(FSControllerBase);
         for each(var p:FSControllerBase in cs){
             var res:Vector.<FSControllerBase> = p.slice(s[0], s[1]);
-            trace("res", res);
             if(res)
                 fieldC.remove(p);
 
@@ -54,11 +53,11 @@ public class SliceResolveBehavior extends BehaviorBase{
             }
         }
 
-        DisplayObjectUtil.removeAll(Config.stage);
-        cs = fieldC.getControllersByClass(FSControllerBase);
-        for each(var p:FSControllerBase in cs){
-            Config.stage.addChild(p.view.texture);
-        }
+//        DisplayObjectUtil.removeAll(Config.stage);
+//        cs = fieldC.getControllersByClass(FSControllerBase);
+//        for each(var p:FSControllerBase in cs){
+//            Config.stage.addChild(p.view.texture);
+//        }
     }
 }
 }

@@ -17,11 +17,14 @@ import flash.events.MouseEvent;
 import flash.geom.Point;
 
 import fslicener.behaviors.control.user.UserControlBehavior;
+import fslicener.behaviors.gameplay.GameProcessBehavior;
 
 import fslicener.behaviors.gameplay.SliceResolveBehavior;
 import fslicener.controller.FSControllerBase;
+import fslicener.controller.FSFieldController;
 import fslicener.model.FSObjectBase;
 import fslicener.model.info.LevelInfo;
+import fslicener.model.info.UserInfo;
 import fslicener.model.info.WaveInfo;
 import fslicener.model.info.WaveObjectInfo;
 
@@ -62,15 +65,15 @@ public class NSEngine extends Sprite {
         var asset:Bitmap = AssetsLib.instance.getAssetBy(FSAssetsHeap.LEVEL_BORDERS_1);
         var field:Field = new Field(asset.bitmapData);
         field.libDesc = FSAssetsHeap.LEVEL_1;
-        _fieldC = FieldController.create(field);
-        _fieldC.addBehaviorsPack(new <BehaviorBase>[new UserControlBehavior(), new SliceResolveBehavior()]);
+        _fieldC = FSFieldController.create(field);
+        _fieldC.addBehaviorsPack(new <BehaviorBase>[new UserControlBehavior(), new SliceResolveBehavior(), new GameProcessBehavior(new UserInfo())]);
         _fieldC.startBehaviors();
 
-        _fruit = FSObjectBase.fromBitmapData(new Point(150, 130), Bitmap(new AppleViewClass()).bitmapData, new CustomMaterial(), 1);
-        _fruit.libDesc = FSAssetsHeap.APPLE;
-        _fruit.rotation = Math.PI / 4;
-        _fruitC = FSControllerBase.create(_fruit);
-        _fieldC.add(_fruitC);
+//        _fruit = FSObjectBase.fromBitmapData(new Point(150, 130), Bitmap(new AppleViewClass()).bitmapData, new CustomMaterial(), 1);
+//        _fruit.libDesc = FSAssetsHeap.APPLE;
+//        _fruit.rotation = Math.PI / 4;
+//        _fruitC = FSControllerBase.create(_fruit);
+//        _fieldC.add(_fruitC);
 
 
         _view = new BitmapDebug(1024, 768);

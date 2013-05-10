@@ -11,6 +11,7 @@ import core.utils.phys.CustomMaterial;
 import core.utils.phys.CustomPolygon;
 import core.utils.phys.CustomShape;
 import core.utils.phys.NapeUtil;
+import core.utils.phys.PhysEngineConnector;
 
 import flash.display.BitmapData;
 
@@ -25,6 +26,10 @@ public class FSObjectBase extends ObjectBase {
 
     public function FSObjectBase() {
         super();
+    }
+
+    override protected function init():void {
+        PhysEngineConnector.instance.initObject(this);
     }
 
     public static function create(pos:Point, shapes:Vector.<CustomShape>, material:CustomMaterial, interactionGroup:uint):FSObjectBase{
@@ -80,6 +85,8 @@ public class FSObjectBase extends ObjectBase {
             obj.pivotY = com.y;
             obj.rotation = rotation;
             obj.points = _points;
+            obj.velocity = velocity;
+            obj.angularVelocity = angularVelocity;
             objects.push(obj);
         }
 

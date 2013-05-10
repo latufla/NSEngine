@@ -16,12 +16,12 @@ public class LevelInfoLib {
 
     public static function getDemoLevelInfo():LevelInfo {
         var source:String = '[' +
-                '[{"name": "apple", "position": "10:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "1"},' +
-                '{"name": "apple", "position":"10:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "5"}],' +
+                '[{"name": "apple", "position": "100:200", "impulse":"50:0", "angularImpulse":"100", "points":"20", "timeout": "1"},' +
+                '{"name": "apple", "position":"100:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "5"}],' +
 
-                '[{"name": "apple", "position":"10:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "1"},' +
-                '{"name": "apple", "position":"10:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "5"},' +
-                '{"name": "apple", "position":"10:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "10"}]' +
+                '[{"name": "apple", "position":"100:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "1"},' +
+                '{"name": "apple", "position":"100:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "5"},' +
+                '{"name": "apple", "position":"100:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "10"}]' +
                 ']';
 
         var json:Object = JSON.parse(source);

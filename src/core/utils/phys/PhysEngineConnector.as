@@ -109,6 +109,16 @@ public class PhysEngineConnector {
         physObj.velocity = Vec2.fromPoint(vel);
     }
 
+    public function getAngularVelocity(obj:ObjectBase):Number{
+        var physObj:Body = _physObjects[obj];
+        return physObj.angularVel;
+    }
+
+    public function setAngularVelocity(obj:ObjectBase, vel:Number):void{
+        var physObj:Body = _physObjects[obj];
+        physObj.angularVel = vel
+    }
+
     public function getRotation(obj:ObjectBase):Number{
         var physObj:Body = _physObjects[obj];
         return physObj.rotation;

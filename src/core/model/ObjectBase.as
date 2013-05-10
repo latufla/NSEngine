@@ -103,6 +103,14 @@ public class ObjectBase {
         PhysEngineConnector.instance.setVelocity(this, value);
     }
 
+    public function get angularVelocity():Number {
+        return PhysEngineConnector.instance.getAngularVelocity(this);
+    }
+
+    public function set angularVelocity(value:Number):void {
+        PhysEngineConnector.instance.setAngularVelocity(this, value);
+    }
+
     public function get mass():Number {
         return PhysEngineConnector.instance.getMass(this);
     }

@@ -22,6 +22,11 @@ public class FSAssetsHeap extends AssetsHeap{
     [Embed(source="../../../../assets/fruits/apple.png")]
     private const AppleViewClass:Class;
 
+    public static const APPLE_BORDERS:String = "appleBorders";
+    [Embed(source="../../../../assets/fruits/appleBorders.png")]
+    private const AppleBordersClass:Class;
+
+
     public function FSAssetsHeap() {
     }
 
@@ -29,6 +34,8 @@ public class FSAssetsHeap extends AssetsHeap{
         super.init();
 
         _assets[APPLE] = AppleViewClass;
+        _assets[APPLE_BORDERS] = AppleBordersClass;
+
         _assets[LEVEL_1] = Level1ViewClass;
         _assets[LEVEL_BORDERS_1] = LevelBorders1ViewClass;
     }
