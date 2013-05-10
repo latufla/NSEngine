@@ -17,6 +17,10 @@ public class WaveObjectInfo {
     private var _timeout:Number;
 
     public function WaveObjectInfo(params:Object) {
+        init(params);
+    }
+
+    private function init(params:Object):void {
         _name = params["name"];
 
         var pos:Array = params["position"].split(":");

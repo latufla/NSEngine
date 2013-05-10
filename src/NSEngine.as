@@ -21,6 +21,8 @@ import fslicener.behaviors.control.user.UserControlBehavior;
 import fslicener.behaviors.gameplay.SliceResolveBehavior;
 import fslicener.controller.FSControllerBase;
 import fslicener.model.FSObjectBase;
+import fslicener.model.info.LevelInfo;
+import fslicener.model.info.WaveInfo;
 import fslicener.model.info.WaveObjectInfo;
 
 import fslicener.utils.Config;
@@ -78,10 +80,16 @@ public class NSEngine extends Sprite {
 
         stage.addEventListener(Event.ENTER_FRAME, onEF);
 
-        var waveObjStr:String = '{"name": "apple", "position":"10:200", "impulse":"100", "angularImpulse":"20", "points":"20", "timeout": "5"}';
+        var waveObjStr:String = '[' +
+                '[{"name": "apple", "position": "10:200", "impulse":"100", "angularImpulse":"20", "points":"20", "timeout": "1"},' +
+                '{"name": "apple", "position":"10:200", "impulse":"100", "angularImpulse":"20", "points":"20", "timeout": "5"}],' +
+                '[{"name": "apple", "position":"10:200", "impulse":"100", "angularImpulse":"20", "points":"20", "timeout": "1"},' +
+                '{"name": "apple", "position":"10:200", "impulse":"100", "angularImpulse":"20", "points":"20", "timeout": "5"},' +
+                '{"name": "apple", "position":"10:200", "impulse":"100", "angularImpulse":"20", "points":"20", "timeout": "10"}]' +
+                ']';
         var params:Object = JSON.parse(waveObjStr);
-        var o:WaveObjectInfo = new WaveObjectInfo(params);
-        trace(o);
+        var lI:LevelInfo = new LevelInfo(params);
+        trace(lI);
     }
 
     private function onEF(e:Event):void {
