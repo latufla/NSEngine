@@ -26,6 +26,7 @@ import fslicener.model.info.WaveInfo;
 import fslicener.model.info.WaveObjectInfo;
 
 import fslicener.utils.Config;
+import fslicener.utils.LevelInfoLib;
 import fslicener.utils.assets.FSAssetsHeap;
 
 import nape.util.BitmapDebug;
@@ -80,15 +81,7 @@ public class NSEngine extends Sprite {
 
         stage.addEventListener(Event.ENTER_FRAME, onEF);
 
-        var waveObjStr:String = '[' +
-                '[{"name": "apple", "position": "10:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "1"},' +
-                '{"name": "apple", "position":"10:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "5"}],' +
-                '[{"name": "apple", "position":"10:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "1"},' +
-                '{"name": "apple", "position":"10:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "5"},' +
-                '{"name": "apple", "position":"10:200", "impulse":"100:100", "angularImpulse":"20", "points":"20", "timeout": "10"}]' +
-                ']';
-        var params:Object = JSON.parse(waveObjStr);
-        var lI:LevelInfo = LevelInfo.create(params);
+        var lI:LevelInfo = LevelInfoLib.getLevelInfoById();
         var clonedLI:LevelInfo = lI.clone();
         trace(clonedLI);
     }
