@@ -11,19 +11,19 @@ import core.utils.assets.AssetsHeap;
 public class FSAssetsHeap extends AssetsHeap{
 
     public static const LEVEL_1:String = "level1";
-    [Embed(source="../../../../assets/levels/1/level.jpg")]
+    [Embed(source="../../../../assets/fslicener/levels/1/level.jpg")]
     private const Level1ViewClass:Class;
 
     public static const LEVEL_BORDERS_1:String = "levelBorders1";
-    [Embed(source="../../../../assets/levels/1/borders.png")]
+    [Embed(source="../../../../assets/fslicener/levels/1/borders.png")]
     private const LevelBorders1ViewClass:Class;
 
     public static const APPLE:String = "apple";
-    [Embed(source="../../../../assets/fruits/apple.png")]
+    [Embed(source="../../../../assets/fslicener/assets/apple.png")]
     private const AppleViewClass:Class;
 
     public static const APPLE_BORDERS:String = "appleBorders";
-    [Embed(source="../../../../assets/fruits/appleBorders.png")]
+    [Embed(source="../../../../assets/fslicener/assets/appleBorders.png")]
     private const AppleBordersClass:Class;
 
 

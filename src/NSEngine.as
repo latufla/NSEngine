@@ -36,7 +36,7 @@ import nape.util.BitmapDebug;
 [SWF(width="1024", height="768", backgroundColor="#000000", frameRate="60")]
 public class NSEngine extends Sprite {
 
-    [Embed(source="../assets/fruits/appleBorders.png")]
+    [Embed(source="../assets/fslicener/assets/appleBorders.png")]
     private const AppleViewClass:Class;
 
     public function NSEngine() {

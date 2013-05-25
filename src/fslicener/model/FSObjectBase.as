@@ -19,8 +19,8 @@ import flash.geom.Point;
 
 public class FSObjectBase extends ObjectBase {
 
-    private var _pivotX:int = 43;
-    private var _pivotY:int = 58;
+    private var _pivotX:int = 32;
+    private var _pivotY:int = 39;
 
     private var _points:uint = 40;
 
