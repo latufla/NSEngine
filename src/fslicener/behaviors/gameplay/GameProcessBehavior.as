@@ -7,6 +7,7 @@
  */
 package fslicener.behaviors.gameplay {
 import core.behaviors.BehaviorBase;
+import core.utils.CollectionUtils;
 import core.utils.assets.AssetsLib;
 import core.utils.phys.CustomMaterial;
 
@@ -29,6 +30,9 @@ public class GameProcessBehavior extends BehaviorBase{
     private var _userInfo:UserInfo;
     private var _time:Number = 0;
 
+    private var _waveId:uint = 0;
+    private var _nextObjectId:uint = 0;
+
     public function GameProcessBehavior(userInfo:UserInfo) {
         _userInfo = userInfo;
         _levelInfo = LevelInfoLib.getLevelInfoById(_userInfo.level);
@@ -40,14 +44,19 @@ public class GameProcessBehavior extends BehaviorBase{
 
         _time +=step;
 
-        var wave:WaveInfo = _levelInfo.waves[0];
-        var objInfo:WaveObjectInfo;
-        for (var i:uint = 0; i < wave.objects.length; i++){
-            objInfo = wave.objects[i];
-            if(_time > objInfo.timeout){
-                applyCreateObject(objInfo);
-                wave.objects.splice(i, 1);
-            }
+        var wave:WaveInfo = _levelInfo.waves[_waveId];
+
+        // TODO: start new wave here
+        if(wave.objects.length <= _nextObjectId){
+            _nextObjectId = 0;
+            _time = 0;
+            //_waveId++;
+        }
+
+        var objInfo:WaveObjectInfo = wave.objects[_nextObjectId];
+        if(objInfo && objInfo.timeout < _time){
+            applyCreateObject(objInfo);
+            _nextObjectId++;
         }
     }
 

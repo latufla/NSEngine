@@ -7,6 +7,7 @@
  */
 package core.utils.phys {
 import core.controller.FieldController;
+import core.model.Field;
 import core.model.ObjectBase;
 
 import flash.display.BitmapData;
@@ -53,7 +54,8 @@ public class PhysEngineConnector {
     }
 
     public function initField(f:FieldController):void {
-        _spaces[f] ||= new Space();
+        var gravity:Vec2 = Vec2.fromPoint((f.object as Field).gravity);
+        _spaces[f] ||= new Space(gravity);
         initEventListeners(_spaces[f]);
     }
 

@@ -12,6 +12,7 @@ import core.controller.FieldController;
 import core.utils.DisplayObjectUtil;
 
 import flash.geom.Point;
+import flash.utils.getTimer;
 
 import fslicener.behaviors.control.ControlBehavior;
 import fslicener.controller.FSControllerBase;
@@ -37,6 +38,7 @@ public class SliceResolveBehavior extends BehaviorBase{
             applySlice(slice);
     }
 
+    // TODO: apply slice to intersected objects only
     private function applySlice(s:Vector.<Point>):void {
         var fieldC:FSFieldController = _controller as FSFieldController;
         if(!fieldC || s[0].equals(s[1]))

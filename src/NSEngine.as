@@ -64,6 +64,8 @@ public class NSEngine extends Sprite {
         var asset:Bitmap = AssetsLib.instance.getAssetBy(FSAssetsHeap.LEVEL_BORDERS_1);
         var field:FSField = new FSField(asset.bitmapData);
         field.libDesc = FSAssetsHeap.LEVEL_1;
+        field.gravity = new Point(0, 75);
+
         _fieldC = FSFieldController.create(field);
         _fieldC.addBehaviorsPack(new <BehaviorBase>[new UserControlBehavior(), new SliceResolveBehavior(), new GameProcessBehavior(new UserInfo())]);
         _fieldC.startBehaviors();

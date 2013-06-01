@@ -140,6 +140,7 @@ public class NapeUtil {
         }
         polys.clear();
 
+//        body.align();
         var pivot:Vec2 = body.localCOM.mul(-1);
         body.translateShapes(pivot);
         return body;
