@@ -15,9 +15,14 @@ public class CustomShape {
     protected var _shape:Shape;
 
     public function CustomShape() {
+        init();
     }
 
-    protected function updatePhysEngineObj(s:Shape):void{
+    protected function init():void {
+        PhysEngineConnector.instance.initShape(this);
+    }
+
+    public function updatePhysEngineObj(s:Shape):void{
         s.body.align();
     }
 
@@ -25,20 +30,16 @@ public class CustomShape {
         return null;
     }
 
-    public function set shape(value:Shape):void {
-        _shape = value;
-    }
-
     public function clone():CustomShape{
         return null;
     }
 
     public function get localCOM():Point{
-        return _shape.localCOM.toPoint();
+        return PhysEngineConnector.instance.getShapeLocalCOM(this);
     }
 
     public function get fieldCOM():Point{
-        return _shape.worldCOM.toPoint();
+        return PhysEngineConnector.instance.getShapeWorldCOM(this);
     }
 }
 }

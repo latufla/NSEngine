@@ -31,14 +31,14 @@ public class CustomCircle extends CustomShape {
         return _radius;
     }
 
-    override protected function updatePhysEngineObj(s:Shape):void{
-        (_shape as Circle).radius = _radius;
+    override public function updatePhysEngineObj(s:Shape):void{
+        (s as Circle).radius = _radius;
         super.updatePhysEngineObj(s);
     }
 
     public function set radius(value:uint):void {
         _radius = value;
-        updatePhysEngineObj(_shape);
+        PhysEngineConnector.instance.updateShape(this);
     }
 }
 }

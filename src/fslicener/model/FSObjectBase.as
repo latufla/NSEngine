@@ -56,7 +56,6 @@ public class FSObjectBase extends ObjectBase {
         _points = value;
     }
 
-    // TODO: use world com as position for sliced objects
     public function splitByLine(a:Point, b:Point, closedGaps:Boolean = false):Vector.<FSObjectBase>{
         if(!(_shapes && _shapes[0] && _shapes[0] is CustomPolygon && _shapes.length == 1))
             return null;
@@ -79,8 +78,8 @@ public class FSObjectBase extends ObjectBase {
         var com:Point;
         var obj:FSObjectBase;
         for (i = 0; i < n; i++) {
-            obj = FSObjectBase.create(ps[i].fieldCOM, new <CustomShape>[ps[i]], _material.clone(), _interactionGroup);
             com = ps[i].localCOM;
+            obj = FSObjectBase.create(ps[i].fieldCOM, new <CustomShape>[ps[i]], _material.clone(), _interactionGroup);
             obj.pivotX = com.x;
             obj.pivotY = com.y;
             obj.rotation = rotation;

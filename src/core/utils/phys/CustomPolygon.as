@@ -22,6 +22,7 @@ public class CustomPolygon extends CustomShape{
     private var _vertexes:Vector.<Point>;
     public function CustomPolygon(vertexes:Vector.<Point>) {
         _vertexes = vertexes.concat();
+        super();
     }
 
     public static function rect(size:Rectangle):Vector.<Point>{
@@ -32,7 +33,7 @@ public class CustomPolygon extends CustomShape{
         return new Polygon(vertexesAsVec2List);
     }
 
-    override protected function updatePhysEngineObj(s:Shape):void{
+    override public function updatePhysEngineObj(s:Shape):void{
         var vs:Vec2List = vertexesAsVec2List;
 
         var p:Polygon = s as Polygon;
@@ -56,7 +57,7 @@ public class CustomPolygon extends CustomShape{
 
     public function set vertexes(value:Vector.<Point>):void {
         _vertexes = value;
-        updatePhysEngineObj(_shape);
+        PhysEngineConnector.instance.updateShape(this);
     }
 
     private function get vertexesAsVec2List():Vec2List{

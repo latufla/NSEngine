@@ -31,9 +31,8 @@ public class PhysEngineConnector {
 
     private var _spaces:Dictionary;
     private var _physObjects:Dictionary; // key RObjectBase, value Body
+    private var _shapes:Dictionary;
     private var _handlers:Dictionary;
-
-    private var _frictionStep:Number = 1 / 60;
 
     private static var _instance:PhysEngineConnector;
 
@@ -49,6 +48,7 @@ public class PhysEngineConnector {
     private function init():void {
         _spaces = new Dictionary();
         _physObjects = new Dictionary();
+        _shapes = new Dictionary();
         _handlers = new Dictionary();
     }
 
@@ -139,9 +139,9 @@ public class PhysEngineConnector {
         physObj.shapes.clear();
         var s:Shape;
         for each(var p:CustomShape in shapes){
-            s = p.toPhysEngineObj();
+            s = _shapes[p];
+            s.body = null; // just in case
             physObj.shapes.add(s);
-            p.shape = s;
         }
         physObj.align();
     }
@@ -199,11 +199,26 @@ public class PhysEngineConnector {
         physObj.applyAngularImpulse(aImp);
     }
 
-    // TODO: fix fps usage
     public function applyTerrainFriction(obj:ObjectBase, k:Number = 0.2, angularK:Number = 0.1, step:Number = 1 / 60):void{
         var physObj:Body = _physObjects[obj];
         physObj.velocity.muleq(Math.pow(k, step));
         physObj.angularVel *= Math.pow(angularK, step);
+    }
+
+    public function initShape(c:CustomShape):void{
+        _shapes[c] ||= c.toPhysEngineObj();
+    }
+
+    public function updateShape(c:CustomShape):void{
+        c.updatePhysEngineObj(_shapes[c]);
+    }
+
+    public function getShapeLocalCOM(c:CustomShape):Point{
+        return _shapes[c].localCOM.toPoint();
+    }
+
+    public function getShapeWorldCOM(c:CustomShape):Point{
+        return _shapes[c].worldCOM.toPoint();
     }
 
     public function doStep(f:FieldController, step:Number, debugView:BitmapDebug = null):void {
